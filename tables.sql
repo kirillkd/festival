@@ -284,7 +284,7 @@ create table application (
     date        timestamp not null,
     status        varchar(15),
     provider_id    integer references provider (provider_id) not null,
-	festival_event_id	integer references festival_event (festival_event_id) not null,
+	festival_event_id	integer references festival_event (festival_event_id) not null
 );
  
  
