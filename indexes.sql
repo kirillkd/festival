@@ -21,6 +21,7 @@ CREATE INDEX ON plays (band_id);
  
 CREATE INDEX ON donor (sponsor_id);
 CREATE INDEX ON advertisement (area_type);
+CREATE INDEX ON advertisement (donor_id);
 CREATE INDEX ON shop (vendor_id);
 CREATE INDEX ON shop (area_type);
 CREATE INDEX ON sold_in (product_id);
