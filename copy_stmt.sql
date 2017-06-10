@@ -22,12 +22,6 @@ WITH DELIMITER ';'
 NULL AS 'null' csv;
  
  
-COPY provider (provider_id, name)
-FROM '/home/sj/Schreibtisch/Datenbanksysteme/project_tables/provider.csv'
-WITH DELIMITER ';'
-NULL AS 'null' csv;
- 
- 
 COPY sponsor (sponsor_id, provider_id, money)
 FROM '/home/sj/Schreibtisch/Datenbanksysteme/project_tables/sponsor.csv'
 WITH DELIMITER ';'
@@ -190,11 +184,16 @@ WITH DELIMITER ';'
 NULL AS 'null' csv;
  
  
-COPY application (application_id, type, description, date, status, provider_id, festival_event_id)
+COPY application (application_id, type, description, date, status, festival_event_id)
 FROM '/home/sj/Schreibtisch/Datenbanksysteme/project_tables/application.csv'
 WITH DELIMITER ';'
 NULL AS 'null' csv;
+  
  
+COPY provider (provider_id, name, application_id)
+FROM '/home/sj/Schreibtisch/Datenbanksysteme/project_tables/provider.csv'
+WITH DELIMITER ';'
+NULL AS 'null' csv;
  
 COPY area_access (wristband_id, area_type, time)
 FROM '/home/sj/Schreibtisch/Datenbanksysteme/project_tables/area_access.csv'
