@@ -171,8 +171,8 @@ create table location (
  
 create table festival_event (
     festival_event_id     serial primary key,
-    start_date            date not null,
-    end_date            date not null,
+    start_date            timestamp not null,
+    end_date            timestamp not null,
     name                varchar(50) not null,
     location_id            integer references location (location_id) not null
 );
