@@ -190,7 +190,7 @@ WITH DELIMITER ';'
 NULL AS 'null' csv;
  
  
-COPY application (application_id, type, description, date, status, provider_id)
+COPY application (application_id, type, description, date, status, provider_id, festival_event_id)
 FROM '/home/sj/Schreibtisch/Datenbanksysteme/project_tables/application.csv'
 WITH DELIMITER ';'
 NULL AS 'null' csv;
