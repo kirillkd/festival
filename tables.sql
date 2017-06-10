@@ -201,8 +201,7 @@ create table ticket (
  
 create table department (
     department_id                serial primary key,
-    name                    varchar(100) not null,
-    festival_event_id    integer references festival_event (festival_event_id) not null
+    name                    varchar(100) not null
 );
  
  
