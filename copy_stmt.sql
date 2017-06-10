@@ -130,7 +130,7 @@ WITH DELIMITER ';'
 NULL AS 'null' csv;
  
  
-COPY department (department_id, name, festival_event_id)
+COPY department (department_id, name)
 FROM '/home/sj/Schreibtisch/Datenbanksysteme/project_tables/department.csv'
 WITH DELIMITER ';'
 NULL AS 'null' csv;
