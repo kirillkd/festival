@@ -8,6 +8,7 @@ CREATE INDEX ON ticket (visitor_id);
 CREATE INDEX ON ticket (ticket_type_id);
 CREATE INDEX ON ticket_price (ticket_type_id);
  
+CREATE INDEX ON provider(application_id);
 CREATE INDEX ON band (band_id);
 CREATE INDEX ON band (provider_id);
 CREATE INDEX ON band (stage_id);
@@ -31,6 +32,5 @@ CREATE INDEX ON sale (shop_id);
 CREATE INDEX ON sale (product_id);
 CREATE INDEX ON post (newsletter_id);
 CREATE INDEX ON area_access (wristband_id);
-CREATE INDEX ON application (provider_id);
 CREATE INDEX ON festival_event (location_id);
 
