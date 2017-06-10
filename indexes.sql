@@ -25,7 +25,6 @@ CREATE INDEX ON shop (vendor_id);
 CREATE INDEX ON shop (area_type);
 CREATE INDEX ON sold_in (product_id);
 CREATE INDEX ON wristband (visitor_id);
-CREATE INDEX ON department (festival_event_id);
  
 CREATE INDEX ON sale (wristband_id); 
 CREATE INDEX ON sale (shop_id);
