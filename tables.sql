@@ -33,11 +33,39 @@ create table ticket_price (
     valid_to        date,
     ticket_type_id        integer references ticket_type (ticket_type_id) not null
 );
-    
-    
+ 
+ 
+create table location (
+    location_id    serial primary key,
+    postcode    varchar(10) not null,
+    city        varchar(100) not null,
+    country    varchar(50) not null
+);
+ 
+ 
+create table festival_event (
+    festival_event_id     serial primary key,
+    start_date            timestamp not null,
+    end_date            timestamp not null,
+    name                varchar(50) not null,
+    location_id            integer references location (location_id) not null
+);
+ 
+ 
+create table application (
+    application_id    serial primary key,
+    type        varchar(30) not null,
+    description    text not null,
+    date        timestamp not null,
+    status        varchar(15),
+	festival_event_id	integer references festival_event (festival_event_id) not null
+);
+
+  
 create table provider (
     provider_id    serial primary key,
-name        varchar(100) not null
+name        varchar(100) not null,
+	application_id integer unique references application (application_id) not null
 );
  
  
@@ -161,23 +189,6 @@ create table wristband (
 );
  
  
-create table location (
-    location_id    serial primary key,
-    postcode    varchar(10) not null,
-    city        varchar(100) not null,
-    country    varchar(50) not null
-);
- 
- 
-create table festival_event (
-    festival_event_id     serial primary key,
-    start_date            date not null,
-    end_date            date not null,
-    name                varchar(50) not null,
-    location_id            integer references location (location_id) not null
-);
- 
- 
 create table ticket (
     ticket_id             serial primary key,
     booking_date              date not null,
@@ -274,17 +285,6 @@ create table sale (
     wristband_id    integer references wristband (wristband_id) not null,
     shop_id    integer references shop (shop_id) not null,
     product_id    integer references product (product_id) not null
-);
- 
- 
-create table application (
-    application_id    serial primary key,
-    type        varchar(30) not null,
-    description    text not null,
-    date        timestamp not null,
-    status        varchar(15),
-    provider_id    integer references provider (provider_id) not null,
-	festival_event_id	integer references festival_event (festival_event_id) not null,
 );
  
  
