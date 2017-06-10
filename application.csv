@@ -1,10 +1,10 @@
-1;letter;Apply here for a timeslot;17-01-05 06:15:00;null
-2;email;Apply here for a timeslot;17-01-05 06:05:00;ok
-3;facebook;Apply here for a timeslot;17-01-05 07:02:00;ok
-4;google docs;Apply here for a timeslot;17-01-05 08:05:00;null
-5;website;Apply here for a timeslot;17-01-05 08:25:00;ok
-6;letter;Last chance for your application;17-02-05 07:15:00;ok
-7;facebook;Last chance for your application;17-02-05 08:15:00;ok
-8;email;Last chance for your application;17-02-05 06:15:00;ok
-9;email;Last chance for your application;17-02-05 07:15:00;ok
-10;website;Last chance for your application;17-02-05 08:15:00;ok
+1;letter;Apply here for a timeslot;17-01-05 06:15:00;null;1
+2;email;Apply here for a timeslot;17-01-05 06:05:00;ok;2
+3;facebook;Apply here for a timeslot;17-01-05 07:02:00;ok;3
+4;google docs;Apply here for a timeslot;17-01-05 08:05:00;null;4
+5;website;Apply here for a timeslot;17-01-05 08:25:00;ok;5
+6;letter;Last chance for your application;17-02-05 07:15:00;ok;6
+7;facebook;Last chance for your application;17-02-05 08:15:00;ok;7
+8;email;Last chance for your application;17-02-05 06:15:00;ok;8
+9;email;Last chance for your application;17-02-05 07:15:00;ok;9
+10;website;Last chance for your application;17-02-05 08:15:00;ok;10
