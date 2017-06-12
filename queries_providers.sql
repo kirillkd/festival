@@ -11,7 +11,7 @@ group by p.name;
 --Total time of music played?
 
 select sum(s.length)
-from play_song ps, song s
+from plays ps, song s
 where ps.song_id = s.song_id;
 
 
@@ -26,24 +26,25 @@ and v.visitor_id = t.visitor_id
 and t.ticket_type_id = tp.ticket_type_id
 and t.booking_date >= tp.valid_from
 and t.booking_date <= coalesce(tp.valid_to, current_date)
-group by v.last_name, v.first_name;
+group by v.last_name, v.first_name, tp.price;
 
 
 --How many songs were played in average per band?
 
 with total_songs_per_band as (
 	select band_id, count(*) as songs
-	from play_song
+	from plays
+	group by band_id
 )
 select avg(songs) from total_songs_per_band;
 
 
 --How much money did the bands earn with their merchandise?
 
-select p.name, sum(s.quantity * prod.price) as total
+select prov.name, sum(s.quantity * prod.price) as total
 from sale s, product prod, provider prov, band b
 where s.product_id = prod.product_id
 and prod.provider_id = prov.provider_id
 and prov.provider_id = b.provider_id
-group by p.name;
+group by prov.name;
 
