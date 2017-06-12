@@ -6,10 +6,10 @@
 6;band;Last chance for your application;17-02-05 07:15:00;ok;6
 7;band;Last chance for your application;17-02-05 08:15:00;ok;7
 8;band;Last chance for your application;17-02-05 06:15:00;ok;8
-9;band;Last chance for your application;17-02-05 07:15:00;ok;9
+9;band;Last chance for your application;17-02-05 07:15:00;null;9
 10;band;Last chance for your application;17-02-05 08:15:00;ok;10
 11;band;Apply here for a timeslot;17-02-05 09:15:00;ok;1
 12;band;Last chance for your application;17-02-05 10:15:00;ok;2
 13;band;Apply here for a timeslot;17-02-05 11:15:00;ok;3
-14;band;Last chance for your application;17-02-05 12:15:00;ok;4
+14;band;Last chance for your application;17-02-05 12:15:00;null;4
 15;band;Last chance for your application;17-02-05 13:15:00;ok;5
