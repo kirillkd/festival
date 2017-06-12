@@ -35,7 +35,7 @@ WHERE type='band') as BandsApplied,
 (SELECT COUNT(*)
 FROM application
 WHERE type='band'
-AND status='accepted') as BandsAccepted;
+AND status='ok') as BandsAccepted;
 
  
 --Which location has had more than one festival organized?
