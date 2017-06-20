@@ -1,4 +1,5 @@
 CREATE INDEX ON timetable_entry(username);
+CREATE INDEX ON timetable_entry(band_id);
 CREATE INDEX ON area(area_type);
 CREATE INDEX ON product(provider_id);
 CREATE INDEX ON vendor(sponsor_id);
@@ -8,8 +9,7 @@ CREATE INDEX ON ticket (visitor_id);
 CREATE INDEX ON ticket (ticket_type_id);
 CREATE INDEX ON ticket_price (ticket_type_id);
  
-CREATE INDEX ON provider(application_id);
-CREATE INDEX ON band (band_id);
+CREATE INDEX ON provider(application_id);s
 CREATE INDEX ON band (provider_id);
 CREATE INDEX ON band (stage_id);
 CREATE INDEX ON sponsor (provider_id);
