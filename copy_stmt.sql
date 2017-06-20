@@ -100,7 +100,7 @@ WITH DELIMITER ';'
 NULL AS 'null' csv;
 
 
-COPY timetable ( timetable_id, band_id, username, rating)
+COPY timetable_entry ( timetable_entry_id, band_id, username, preference)
 FROM '/home/sj/Schreibtisch/Datenbanksysteme/project_tables/timetable.csv'
 WITH DELIMITER ';'
 NULL AS 'null' csv;
