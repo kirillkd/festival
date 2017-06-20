@@ -1,4 +1,4 @@
-CREATE INDEX ON timetable(username);
+CREATE INDEX ON timetable_entry(username);
 CREATE INDEX ON area(area_type);
 CREATE INDEX ON product(provider_id);
 CREATE INDEX ON vendor(sponsor_id);

@@ -46,7 +46,7 @@ def main():
 
     files = ['visitor', 'journalist', 'ticket_type', 'ticket_price', 'location', 'festival_event', 'application',
              'provider', 'sponsor', 'vendor', 'donor', 'area', 'advertisement', 'stage', 'band', 'song',
-             'visitor_account', 'timetable', 'product', 'shop', 'sold_in', 'wristband', 'ticket', 'department',
+             'visitor_account', 'timetable_entry', 'product', 'shop', 'sold_in', 'wristband', 'ticket', 'department',
              'employee', 'note', 'employee_note', 'instruction', 'shift', 'employee_shift', 'newsletter',
              'newsletter_application', 'post', 'sale', 'area_access', 'plays']
     for file in files:

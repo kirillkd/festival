@@ -143,11 +143,11 @@ create table visitor_account (
 );
  
  
-create table timetable (
-    timetable_id	serial primary key,
-    band_id			integer references band (band_id),
-	username		varchar(100) references visitor_account (username),
-    rating			integer not null default 1 check (rating > 0 and rating < 6)
+create table timetable_entry (
+    timetable_entry_id	serial primary key,
+    band_id				integer references band (band_id),
+	username			varchar(100) references visitor_account (username),
+    rating				integer not null default 1 check (rating > 0 and rating < 6)
 );
  
  
