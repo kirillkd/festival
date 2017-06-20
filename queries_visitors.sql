@@ -30,11 +30,11 @@ WHERE sold_tickets.number =
 
 ---Input: Visitor_ID
 
-SELECT timetable.*, visitor.first_name, visitor.last_name
-FROM visitor, visitor_account, timetable
+SELECT timetable_entry.*, visitor.first_name, visitor.last_name
+FROM visitor, visitor_account, timetable_entry
 WHERE visitor.visitor_id = 10
 AND visitor.visitor_id = visitor_account.visitor_id
-AND visitor_account.username = timetable.username;
+AND visitor_account.username = timetable_entry.username;
  
  
 --How many visitors lost their rfid chip?
