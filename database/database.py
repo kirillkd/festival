@@ -19,7 +19,7 @@ def prepare_database():
 
 
 def insert_file(filename):
-    with open(filename + '.csv', newline='\n') as file:
+    with open('csv/' + filename + '.csv', newline='\n') as file:
         reader = csv.reader(file, delimiter=';')
         for line in reader:
             query = "insert into " + filename + " values ("
