@@ -1,0 +1,45 @@
+<div class="container">		
+	<h1>Music Festival Management System</h1></br>
+
+	<nav class="navbar navbar-default">
+		
+		<div class="container-fluid">
+		
+			<div class="navbar-header">
+				<a class="navbar-brand" href="index.jsp">Start page</a>
+			</div>
+							
+			<ul class="nav navbar-nav navbar-left">
+				<li><a href="#">Purchase Ticket</a></li>
+				<li><a href="#">Create Timetable</a></li>
+				<li><a href="#">New product</a></li>
+				<li><a href="#">Purchase Item</a></li>
+			</ul>
+			
+			<ul class="nav navbar-nav navbar-right navbar-collapse">
+				<li><button type="submit" class="btn btn-danger navbar-btn pull-right" data-toggle="modal" data-target="#resetDatabaseModal">Reset database</button></li>
+			</ul>										
+		</div>
+	</nav>
+	
+</div>
+
+<div id="resetDatabaseModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Reset database?</h4>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to reset the database to its original state? This will delete all data entered by you.</p>
+			</div>
+			<div class="modal-footer">
+				<form action="/festival/resetDatabase" method="post">
+					<button name="resetDatabase" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Yes, I'm sure</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
