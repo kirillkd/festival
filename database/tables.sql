@@ -1,4 +1,4 @@
-CREATE TYPE visitor_sex AS ENUM ('m', 'f');
+create type visitor_sex as enum ('m', 'f');
 
 create table visitor (
     visitor_id	serial primary key,
@@ -53,8 +53,8 @@ create table festival_event (
     location_id			integer references location (location_id) not null
 );
  
-CREATE TYPE application_type AS ENUM ('band', 'vendor', 'donor');
-CREATE TYPE application_status AS ENUM ('accepted', 'pending', 'rejected');
+create type application_type as enum ('band', 'vendor', 'donor');
+create type application_status as enum ('accepted', 'pending', 'rejected');
 
 create table application (
     application_id		serial primary key,
@@ -97,7 +97,7 @@ create table area (
     capacity	integer not null
 );
  
-CREATE TYPE advertisement_type AS ENUM ('poster', 'balloon');
+create type advertisement_type as enum ('poster', 'balloon');
 
 create table advertisement (
     advertisement_id	integer not null,
@@ -108,7 +108,7 @@ create table advertisement (
     constraint ad_pk primary key (advertisement_id, area_type)
 );
  
-CREATE TYPE stage_type AS ENUM ('rock_performance', 'metal', 'pop', 'rap', 'trans', 'rock');
+create type stage_type as enum ('metal', 'pop', 'rap', 'trans', 'rock');
 
 create table stage (
     stage_id		serial primary key,
@@ -157,7 +157,7 @@ create table timetable_entry (
 );
  
 
-CREATE TYPE product_category AS ENUM ('beverage', 'food', 'clothes', 'accessory');
+create type product_category as enum ('beverage', 'food', 'clothes', 'accessory');
 
 create table product (
     product_id		serial primary key,
@@ -169,7 +169,7 @@ create table product (
 );
  
 
-CREATE TYPE shop_category AS ENUM ('beverage', 'food', 'clothes', 'accessory');
+create type shop_category as enum ('beverage', 'food', 'clothes', 'accessory');
  
 create table shop (
     shop_id		serial primary key,
@@ -195,7 +195,7 @@ create table wristband (
 );
  
 
-CREATE TYPE ticket_payment_method AS ENUM ('VISA', 'Master Card', 'Invoice', 'Direct Debit', 'PayPal');
+create type ticket_payment_method as enum ('VISA', 'Master Card', 'Invoice', 'Direct Debit', 'PayPal');
 
 create table ticket (
     ticket_id			serial primary key,
@@ -246,7 +246,7 @@ create table instruction (
 );
  
  
-CREATE TYPE shift_type AS ENUM ('security', 'cleaning', 'information_desk');
+create type shift_type as enum ('security', 'cleaning', 'information_desk');
 
 create table shift (
     shift_id		serial primary key,
