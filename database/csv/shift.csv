@@ -1,6 +1,9 @@
-1;Early 1;concert area;2017-03-25 06:00:00;2017-03-25 13:00:00
-2;Early 2;camping area;2017-03-25 06:00:00;2017-03-25 13:00:00
-3;Mid 1;concert area;2017-03-25 13:00:00;2017-03-25 21:00:00
-4;Mid 2;camping area;2017-03-25 13:00:00;2017-03-25 21:00:00
-5;Late 1;concert area;2017-03-25 21:00:00;2017-03-26 03:00:00
-6;Late 2;camping area;2017-03-25 21:00:00;2017-03-26 03:00:00
+1;security;concert area;2017-03-25 06:00:00;2017-03-25 13:00:00
+2;cleaning;camping area;2017-03-25 06:00:00;2017-03-25 13:00:00
+3;security;concert area;2017-03-25 13:00:00;2017-03-25 21:00:00
+4;cleaning;camping area;2017-03-25 13:00:00;2017-03-25 21:00:00
+5;security;concert area;2017-03-25 21:00:00;2017-03-26 03:00:00
+6;cleaning;camping area;2017-03-25 21:00:00;2017-03-26 03:00:00
+7;information_desk;concert area;2017-03-25 06:00:00;2017-03-25 13:00:00
+8;information_desk;concert area;2017-03-25 13:00:00;2017-03-25 21:00:00
+9;information_desk;concert area;2017-03-25 21:00:00;2017-03-25 03:00:00
