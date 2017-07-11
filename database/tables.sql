@@ -1,3 +1,5 @@
+create type visitor_sex as enum ('m', 'f');
+
 create table visitor (
     visitor_id	serial primary key,
     email		varchar(100) not null,
@@ -7,7 +9,7 @@ create table visitor (
     country		varchar(100) not null,
     birthdate	date not null,
     phone		varchar(50),
-    sex			varchar(1)
+    sex			visitor_sex
 );
  
  
@@ -17,7 +19,7 @@ create table journalist (
     visitor_id		integer references visitor (visitor_id) not null
 );
  
- 
+
 create table ticket_type (
     ticket_type_id	serial primary key,
     type			varchar(100) not null,
@@ -51,13 +53,15 @@ create table festival_event (
     location_id			integer references location (location_id) not null
 );
  
- 
+create type application_type as enum ('band', 'vendor', 'donor');
+create type application_status as enum ('accepted', 'pending', 'rejected');
+
 create table application (
     application_id		serial primary key,
-    type				varchar(30) not null,
+    type				application_type not null,
     description			text not null,
     date				timestamp not null,
-    status				varchar(15),
+    status				application_status default 'pending',
 	festival_event_id	integer references festival_event (festival_event_id) not null
 );
 
@@ -93,22 +97,24 @@ create table area (
     capacity	integer not null
 );
  
- 
+create type advertisement_type as enum ('poster', 'balloon');
+
 create table advertisement (
     advertisement_id	integer not null,
-    type				varchar(100) not null,
+    type				advertisement_type not null,
     quantity			integer not null,
     donor_id			integer references donor (donor_id),
     area_type			varchar(100) references area (area_type),
     constraint ad_pk primary key (advertisement_id, area_type)
 );
  
- 
+create type stage_type as enum ('metal', 'pop', 'rap', 'trans', 'rock');
+
 create table stage (
     stage_id		serial primary key,
     name			varchar(100) not null,
     capacity		integer not null,
-    type			varchar(200) not null,
+    type			stage_type not null,
     number_seats	integer not null default 0
 );
   
@@ -150,21 +156,25 @@ create table timetable_entry (
     preference			integer check (preference > 0 and preference < 6)
 );
  
- 
+
+create type product_category as enum ('beverage', 'food', 'clothes', 'accessory');
+
 create table product (
     product_id		serial primary key,
     name			varchar(100) not null,
     price			numeric(5,2) not null,
     type			varchar(200) not null,
-    category		varchar(200) not null,
+    category		product_category not null,
     provider_id 	integer references provider (provider_id) --null value means that the product is provided by the festival itself
 );
  
+
+create type shop_category as enum ('beverage', 'food', 'clothes', 'accessory');
  
 create table shop (
     shop_id		serial primary key,
     name		varchar(100) not null,
-    category	varchar(100),
+    category	shop_category,
     vendor_id	integer references vendor (vendor_id),
     area_type	varchar(100) references area (area_type)
 );
@@ -184,11 +194,13 @@ create table wristband (
     balance			numeric (6,2) not null default 0.0 check (balance >= 0)
 );
  
- 
+
+create type ticket_payment_method as enum ('VISA', 'Master Card', 'Invoice', 'Direct Debit', 'PayPal');
+
 create table ticket (
     ticket_id			serial primary key,
     booking_date		date not null,
-    payment_method		varchar(50) not null,
+    payment_method		ticket_payment_method not null,
     ticket_type_id		integer references ticket_type (ticket_type_id),
     visitor_id			integer references visitor (visitor_id) not null,
     festival_event_id	integer references festival_event (festival_event_id) not null
@@ -234,9 +246,11 @@ create table instruction (
 );
  
  
+create type shift_type as enum ('security', 'cleaning', 'information_desk');
+
 create table shift (
     shift_id		serial primary key,
-    type			varchar(100) not null,
+    type			shift_type not null,
     place			varchar(100) not null,
     start_time		timestamp not null,
     end_time		timestamp not null
