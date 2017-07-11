@@ -2,7 +2,7 @@ package beans;
 
 import java.util.Date;
 
-public class festival_event {
+public class FestivalEventBean {
 	
 	private int festival_event_id;
 	private Date start_date;
