@@ -9,6 +9,7 @@ public class ProductBean {
 	private enum product_category{
 		beverage, food, clothes, accessory
 	}
+	private product_category category;
 	
 	public int getProduct_id() {
 		return product_id;
@@ -33,7 +34,12 @@ public class ProductBean {
 	}
 	public void setType(String type) {
 		this.type = type;
-	};
-
+	}
+	public product_category getProduct_Category(){
+		return category;
+	}
+	public void setProduct_Category(product_category category){
+		this.category = category;
+	}
 
 }
