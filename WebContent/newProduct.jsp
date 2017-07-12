@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.util.LinkedList" %>
+<%@ page import="java.util.LinkedList, beans.ShopBean" %>
 
 
-<jsp:useBean id="shopListBean" scope="request" class="bean.ShopListBean"></jsp:useBean>
+<jsp:useBean id="shopListBean" scope="request" class="beans.GenericListBean"></jsp:useBean>
+<jsp:useBean id="categoryListBean" scope="request" class="beans.GenericListBean"></jsp:useBean>
 
 
 <!DOCTYPE html>
@@ -47,13 +48,17 @@
 				</div>
 				<div class="form-group">
 					<label for="inputProductCategory">Product Category</label>
-					<input type="text" class="form-control" id="inputProductCategory" placeholder="Product Category">
+					<select class="form-control" id="inputProductCategory"">
+						<% for (int i=0; i<categoryListBean.getItems().size(); i++) { %>
+							<option><%= categoryListBean.getItems().get(i) %></option>
+						<% } %>
+					</select>
 				</div>
 				<div class="form-group">
 					<label for="inputSoldIn">Shops to be sold in</label>
 					<select class="form-control" id="inputSoldIn" multiple="multiple"">
-						<% for (int i=0; i<shopListBean.getShops().size(); i++) { %>
-							<option><%= shopListBean.getShops().get(i).getName() %></option>
+						<% for (int i=0; i<shopListBean.getItems().size(); i++) { %>
+							<option><%= ((ShopBean) shopListBean.getItems().get(i)).getName() %></option>
 						<% } %>
 					</select>
 				</div>

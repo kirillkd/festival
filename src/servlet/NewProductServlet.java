@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,12 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.ProductBean;
-import bean.ShopBean;
-import bean.ShopListBean;
+import beans.GenericListBean;
+import beans.ShopBean;
 
 import dao.NewProductDAO;
-import dao.ShopDAO;
 
 
 @WebServlet("/new-product")
@@ -28,15 +25,23 @@ public class NewProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/new-product.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/newProduct.jsp");
 		
-		ShopListBean shopListBean = new ShopListBean();
+		GenericListBean<ShopBean> shopListBean = new GenericListBean<>();
+		GenericListBean<String> categoryListBean = new GenericListBean<>();
 		
-		ShopDAO shopDao = new ShopDAO();
-		
-		try {
-			shopDao.getVendorShops(shopListBean, Integer.parseInt(req.getParameter("vendor_id")));
+				
+		try {		
+			NewProductDAO newProductDao = new NewProductDAO();
+
+			newProductDao.getVendorShops(shopListBean, Integer.parseInt(req.getParameter("vendor_id")));
 			req.setAttribute("shopListBean", shopListBean);
+			
+			newProductDao.getProductCategoryDropdownContent(categoryListBean);
+			req.setAttribute("categoryListBean", categoryListBean);
+			
+			newProductDao.closeConnection();
+			
 		} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
 			req.setAttribute("error", e.toString()+ " " + e.getMessage());
 			e.printStackTrace();
