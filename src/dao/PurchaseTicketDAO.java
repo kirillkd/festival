@@ -2,7 +2,6 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
@@ -16,11 +15,9 @@ import beans.TicketTypeBean;
 
 public class PurchaseTicketDAO extends DAO {
 	
-	private Connection connection;
-	
 	
 	public PurchaseTicketDAO() throws ClassNotFoundException, SQLException {
-		this.connection = getConnection();
+		getConnection();
 	}
 	
 	
@@ -79,7 +76,7 @@ public class PurchaseTicketDAO extends DAO {
 	}
 	
 	
-	public void getSexDropdownContent(GenericListBean<String> sexListBean) throws SQLException {
+	public void getVisitorSexDropdownContent(GenericListBean<String> sexListBean) throws SQLException {
 		String query = "select unnest(enum_range(NULL::visitor_sex));";
 		
 		Statement statement = connection.createStatement();
@@ -96,7 +93,7 @@ public class PurchaseTicketDAO extends DAO {
 		statement.close();
 	}
 	
-	public void getPaymentMethodDropdownContent(GenericListBean<String> paymentMethodListBean) throws SQLException {
+	public void getTicketPaymentMethodDropdownContent(GenericListBean<String> paymentMethodListBean) throws SQLException {
 		String query = "select unnest(enum_range(NULL::ticket_payment_method));";
 		
 		Statement statement = connection.createStatement();
@@ -111,10 +108,5 @@ public class PurchaseTicketDAO extends DAO {
 		
 		resultSet.close();
 		statement.close();
-	}
-	
-		
-	public void closeConnection() throws SQLException {
-		connection.close();
-	}
+	}	
 }

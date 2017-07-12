@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,10 +45,10 @@ public class PurchaseTicketServlet extends HttpServlet {
 			purchaseTicketDao.getTicketTypes(ticketTypeListBean);
 			req.setAttribute("ticketTypeListBean", ticketTypeListBean);
 			
-			purchaseTicketDao.getSexDropdownContent(sexListBean);
+			purchaseTicketDao.getVisitorSexDropdownContent(sexListBean);
 			req.setAttribute("sexListBean", sexListBean);
 			
-			purchaseTicketDao.getPaymentMethodDropdownContent(paymentMethodListBean);
+			purchaseTicketDao.getTicketPaymentMethodDropdownContent(paymentMethodListBean);
 			req.setAttribute("paymentMethodListBean", paymentMethodListBean);
 			
 			purchaseTicketDao.closeConnection();

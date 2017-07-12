@@ -6,9 +6,13 @@ import java.sql.SQLException;
 
 
 public abstract class DAO {
-	protected Connection getConnection() throws SQLException, ClassNotFoundException {
+	
+	protected Connection connection;
+	
+	
+	protected void getConnection() throws SQLException, ClassNotFoundException {
 			Class.forName("org.postgresql.Driver");
-        Connection con =  DriverManager.getConnection(
+        Connection connection =  DriverManager.getConnection(
         		"jdbc:postgresql://" 
         + Config.Database.HOST 
         + ":" + Config.Database.PORT
@@ -16,8 +20,13 @@ public abstract class DAO {
         Config.Database.USER,
         Config.Database.PASS);
         
-        con.setAutoCommit(false);
+        connection.setAutoCommit(false);
         
-        return con;
+        this.connection = connection;        
     }
+	
+	
+	public void closeConnection() throws SQLException {
+		connection.close();
+	}
 }

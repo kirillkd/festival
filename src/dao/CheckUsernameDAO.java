@@ -1,7 +1,5 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,11 +20,8 @@ public class CheckUsernameDAO extends DAO {
 		String query2 = "SELECT p.name FROM band b, timetable_entry te, provider p WHERE username = ? AND b.band_id = te.band_id AND p.provider_id = b.provider_id ORDER BY te.preference DESC;";
 
 		
-		Connection con1 = getConnection();
-		Connection con2 = getConnection();
-
-		PreparedStatement pstmt1 = con1.prepareStatement(query1);
-		PreparedStatement pstmt2 = con2.prepareStatement(query2);
+		PreparedStatement pstmt1 = connection.prepareStatement(query1);
+		PreparedStatement pstmt2 = connection.prepareStatement(query2);
 
 		pstmt1.setString(1, visitor_account.getUsername());
 		pstmt2.setString(1, visitor_account.getUsername());
@@ -51,8 +46,7 @@ public class CheckUsernameDAO extends DAO {
 			rs2.close();
 			pstmt1.close();
 			pstmt2.close();
-			con1.close();
-			con2.close();
+			connection.close();
 
 		}
 	}
