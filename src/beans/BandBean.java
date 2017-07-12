@@ -2,7 +2,7 @@ package beans;
 
 import java.util.Date;
 
-public class BandBean {
+public class BandBean extends ProviderBean{
 
 	private int band_id;
 	private boolean headliner;
