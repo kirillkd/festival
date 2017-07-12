@@ -28,23 +28,21 @@ public class CheckUsernameServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+				
 		try {
 			CheckUsernameDAO dao = new CheckUsernameDAO();
 	    	VisitorAccountBean visitor_account = new VisitorAccountBean();
 	    	ArrayList<BandBean> bands = new ArrayList<>();
 	    	visitor_account.setUsername(req.getParameter("username"));
 	    	dao.getCheckUsername(visitor_account, bands);
-	    	req.setAttribute("bands", bands);
-			
-			
+	    	req.setAttribute("bands", bands);						
 		}
-		catch (SQLException e) {
-			resp.sendError(502);
+		catch (SQLException | ClassNotFoundException | RuntimeException e) {
+			req.setAttribute("error", e.getMessage());
 		}
-		catch (ClassNotFoundException e) {
-			resp.sendError(502);
-		}
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/timetable.jsp");
+		dispatcher.forward(req, resp);
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

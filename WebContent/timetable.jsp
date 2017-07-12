@@ -17,49 +17,43 @@
 		</title>
 		
 		<div class="container">
-	<h1>Music Festival Management System</h1>
-	</br>
-
-	<nav class="navbar navbar-default">
-
-		<div class="container-fluid">
-
-			<div class="navbar-header">
-				<a class="navbar-brand" href="index.jsp">Start page</a>
-			</div>
-
-		</div>
-	</nav>
-
-	<nav class="navbar navbar-default">
-
-		<div class="container-fluid">
-
-			<div class="navbar-header">
-				<a class="navbar-brand"> Username: <input type="text" required
-					placeholder="Please insert username" id="username" name="username">
-				</a>
-			</div>
-
-
-			<div class="nav navbar-nav navbar-right navbar-collapse">
-				<form action="/festival/checkUsername" method="post">
-				<button type="submit"
-						class="btn btn-danger navbar-btn pull-right" data-toggle="modal"
-						data-target="#checkUsername">okay</button>
-				</form>
-				
-				<% if (request.getAttribute("bands") == null) { %>
-					<p> <%= ((BandBean) bands.get(0)).getName() %> </p>
-				<% } %>
-			</div>
-
-		</div>
-	</nav>
-
-</div>
-
+			<h1>Music Festival Management System</h1>
+			</br>
+		
+			<nav class="navbar navbar-default">
+		
+				<div class="container-fluid">
+		
+					<div class="navbar-header">
+						<a class="navbar-brand" href="index.jsp">Start page</a>
+					</div>
+		
+				</div>
+			</nav>
 			
+			<% if (request.getAttribute("error") != null) { %>
+				<%= request.getAttribute("error") %>
+			<% } %>
+		
+			<nav class="navbar navbar-default">
+		
+				<div class="container-fluid">
+					
+					<ul class="nav navbar-nav">
+						<li><a>Username: </a><li>
+					</ul>
+		
+					<form class="navbar-form" action="/festival/checkUsername" method="post">
+						<input type="text" required class="form-control" placeholder="Please insert username" id="username" name="username">
+						<button type="submit" class="btn btn-primary navbar-btn">okay</button>
+					</form>				
+										
+					<% if (((ArrayList) request.getAttribute("bands")).size() > 0) { %>
+							<p> <%= ((BandBean) bands.get(0)).getName() %> </p>
+					<% } %>
+		
+				</div>
+			</nav>
+		</div>			
 	</body>
 </html>
-
