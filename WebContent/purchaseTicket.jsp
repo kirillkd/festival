@@ -27,7 +27,9 @@
 		
 			<% if (request.getAttribute("error") != null) { %>
 				<%= request.getAttribute("error") %>
+			
 			<% } else { %>
+			
 			<form>
 				<div class="form-group">					
 					<label for="inputFestival_Event">Festival Event</label>
@@ -49,17 +51,17 @@
 				
 				<div class="form-group">	
 					<label for="inputFirst_Name">First Name</label>
-					<input type="text" class="form-control" id="inputFirst_Name" placeholder="First Name">
+					<input type="text" required class="form-control" id="inputFirst_Name" placeholder="First Name">
 				</div>
 				
 				<div class="form-group">	
 					<label for="inputLast_Name">Last Name</label>
-					<input type="text" class="form-control" id="inputLast_Name" placeholder="Last Name">
+					<input type="text" required class="form-control" id="inputLast_Name" placeholder="Last Name">
 				</div>
 				
 				<div class="form-group">	
 					<label for="inputEmail">E-Mail</label>
-					<input type="text" class="form-control" id="inputEmail" placeholder="E-Mail">
+					<input type="text" required class="form-control" id="inputEmail" placeholder="E-Mail">
 				</div>
 				
 				<div class="form-group">	
@@ -69,7 +71,7 @@
 				
 				<div class="form-group">	
 					<label for="inputBirthdate">Birthdate</label>
-					<input type="date" class="form-control" id="inputBirthdate" placeholder="Birthdate">					
+					<input type="date" required class="form-control" id="inputBirthdate" placeholder="Birthdate">
 				</div>
 				
 				<div class="form-group">	
@@ -83,12 +85,12 @@
 								
 				<div class="form-group">	
 					<label for="inputAddress">Address</label>
-					<input type="text" class="form-control" id="inputAddress" placeholder="Number Street, County, Federal State Postcode">					
+					<input type="text" required class="form-control" id="inputAddress" placeholder="Number Street, County, Federal State Postcode">					
 				</div>
 				
 				<div class="form-group">	
 					<label for="inputCountry">Country</label>
-					<input type="text" class="form-control" id="inputCountry" placeholder="Country">					
+					<input type="text" required class="form-control" id="inputCountry" placeholder="Country">
 				</div>
 				
 				<div class="form-group" style="padding-bottom:20px">	

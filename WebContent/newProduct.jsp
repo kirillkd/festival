@@ -28,23 +28,25 @@
 		<div class="container">
 		
 			<% if (request.getAttribute("error") != null) { %>
-				</br>
-			<%= request.getAttribute("error") %>
+				<div class="alert alert-danger alert-dismissable">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<%= request.getAttribute("error") %>
+				</div>
 
 			<% } else { %>
 			
 			<form>
 				<div class="form-group">
 					<label for="inputProductName">Product Name</label>
-					<input type="text" class="form-control" id="inputProductName" placeholder="Product Name">
+					<input type="text" required class="form-control" id="inputProductName" placeholder="Product Name">
 				</div>
 				<div class="form-group">
 					<label for="inputProductPrice">Product Price</label>
-					<input type="number" step="0.01" min="0" class="form-control" id="inputProductPrice">
+					<input type="number" required step="0.01" min="0" class="form-control" id="inputProductPrice">
 				</div>
 				<div class="form-group">
 					<label for="inputProductType">Product Type</label>
-					<input type="text" class="form-control" id="inputProductType" placeholder="Product Type">
+					<input type="text" required class="form-control" id="inputProductType" placeholder="Product Type">
 				</div>
 				<div class="form-group">
 					<label for="inputProductCategory">Product Category</label>
