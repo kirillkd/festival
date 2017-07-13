@@ -1,8 +1,11 @@
 package servlet;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,11 +28,29 @@ public class ResetDatabaseServlet extends HttpServlet {
 				
 		Process p = Runtime.getRuntime().exec("python3 database.py", null, new File(path));
 		
+		BufferedReader stdErrorReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+		
+		String error = "";
+		String s;
+		
+		while ((s = stdErrorReader.readLine()) != null) {
+			error += s + "\n";
+		}
+		
 		try {
 			p.waitFor();
-			resp.sendRedirect(req.getContextPath() + "/index.jsp");
+			
+			if (!error.equals("")) {
+				req.setAttribute("error", error);
+			} else {
+				req.setAttribute("success", "Database reset successful!");
+			}
+			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
+			dispatcher.forward(req, resp);
 		} catch (InterruptedException e) {
-			resp.sendError(502);
+			req.setAttribute("error", e.toString() + " " + e.getMessage());
+			e.printStackTrace();
 		}
 	}	
 }
