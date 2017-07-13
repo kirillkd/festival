@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.GenericListBean;
 import beans.ShopBean;
+import beans.VendorBean;
 
 import dao.NewProductDAO;
 
@@ -27,25 +28,42 @@ public class NewProductServlet extends HttpServlet {
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/newProduct.jsp");
 		
-		GenericListBean<ShopBean> shopListBean = new GenericListBean<>();
-		GenericListBean<String> categoryListBean = new GenericListBean<>();
-		
+		if (req.getParameter("vendor_id") == null) {
+			try {
+				GenericListBean<VendorBean> vendorListBean = new GenericListBean<>();
 				
-		try {		
-			NewProductDAO newProductDao = new NewProductDAO();
+				NewProductDAO newProductDao = new NewProductDAO();
+				
+				newProductDao.getVendors(vendorListBean);
+				req.setAttribute("vendorListBean", vendorListBean);
+				
+				newProductDao.closeConnection();
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				req.setAttribute("error", e.toString() + " " + e.getMessage());
+				e.printStackTrace();
+			}
+			
+		} else {
+			try {
+				GenericListBean<ShopBean> shopListBean = new GenericListBean<>();
+				GenericListBean<String> categoryListBean = new GenericListBean<>();
+				
+				NewProductDAO newProductDao = new NewProductDAO();
 
-			newProductDao.getVendorShops(shopListBean, Integer.parseInt(req.getParameter("vendor_id")));
-			req.setAttribute("shopListBean", shopListBean);
-			
-			newProductDao.getProductCategoryDropdownContent(categoryListBean);
-			req.setAttribute("categoryListBean", categoryListBean);
-			
-			newProductDao.closeConnection();
-			
-		} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
-			req.setAttribute("error", e.toString()+ " " + e.getMessage());
-			e.printStackTrace();
-		}		
+				newProductDao.getVendorShops(shopListBean, Integer.parseInt(req.getParameter("vendor_id")));
+				req.setAttribute("shopListBean", shopListBean);
+				
+				newProductDao.getProductCategoryDropdownContent(categoryListBean);
+				req.setAttribute("categoryListBean", categoryListBean);
+				
+				newProductDao.closeConnection();
+				
+			} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
+				req.setAttribute("error", e.toString() + " " + e.getMessage());
+				e.printStackTrace();
+			}
+		}
 		
 		dispatcher.forward(req, resp);
 	}
