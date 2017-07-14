@@ -31,7 +31,7 @@
     <%
       for(int i = 0; i < shopsBean.getShopList().size(); i++){%>
 	<tr>
-    <td><%= shopsBean.getShopList().get(i).getName() %></td>
+    <td><a href="showProducts.jsp?val=<%shopsBean.getShopList().get(i).getShop_id();%>"><%= shopsBean.getShopList().get(i).getName() %></a></td>
     <td><%= shopsBean.getShopList().get(i).getCategory() %></td>
   </tr>  
  <% } %>  
