@@ -1,11 +1,19 @@
 package beans;
+import java.util.*;
 
 public class ShopBean {
 
 	private int shop_id;
 	private String name;
 	private String category;
+	private List<ShopBean> shopList;
 	
+	public List<ShopBean> getShopList() {
+		return shopList;
+	}
+	public void setShopList(List<ShopBean> shopList) {
+		this.shopList = shopList;
+	}
 	public int getShop_id() {
 		return shop_id;
 	}

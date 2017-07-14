@@ -1,15 +1,26 @@
 package beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProductBean {
 
 	private int product_id;
 	private String name;
 	private double price;
 	private String type;
-	private enum product_category{
+	public enum product_category{
 		beverage, food, clothes, accessory
 	}
 	private product_category category;
+	private List <ProductBean> productsList = new ArrayList<ProductBean>();
+	
+	public List<ProductBean> getProductsList() {
+		return productsList;
+	}
+	public void setProductsList(List<ProductBean> productsList) {
+		this.productsList = productsList;
+	}
 	
 	public int getProduct_id() {
 		return product_id;
