@@ -23,6 +23,7 @@
   <table class="table table-hover">
     <thead>
       <tr>
+      <th>Shop Id</th>
         <th>Shop Name</th>
         <th>Category</th>
       </tr>
@@ -31,13 +32,13 @@
     <%
       for(int i = 0; i < shopsBean.getShopList().size(); i++){%>
 	<tr>
-    <td><a href="showProducts.jsp?val=<%shopsBean.getShopList().get(i).getShop_id();%>"><%= shopsBean.getShopList().get(i).getName() %></a></td>
+    <td><%= shopsBean.getShopList().get(i).getShop_id() %></td>
+    <td><a href="./ProductsServlet?shopid=<%= shopsBean.getShopList().get(i).getShop_id()%>"><%= shopsBean.getShopList().get(i).getName() %></a></td>
     <td><%= shopsBean.getShopList().get(i).getCategory() %></td>
   </tr>  
  <% } %>  
       
     </tbody>
-  </table>
 </div>
 
 </body>
