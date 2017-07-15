@@ -9,6 +9,8 @@
 <jsp:useBean id="paymentMethodListBean" scope="request" class="beans.GenericListBean"></jsp:useBean>
 
 
+<!DOCTYPE html>
+
 <html>
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -30,53 +32,53 @@
 			
 			<% } else { %>
 			
-			<form>
+			<form action="/festival/purchase-ticket" method="post">
 				<div class="form-group">					
 					<label for="inputFestival_Event">Festival Event</label>
-					<select class="form-control" id="inputFestival_Event"">
+					<select class="form-control" id="inputFestival_Event" name="inputFestival_Event">
 						<% for(int i=0; i<festivalEventListBean.getItems().size(); i++) { %>
-							<option><%= ((FestivalEventBean) festivalEventListBean.getItems().get(i)).getName() %></option>
+							<option value="<%= ((FestivalEventBean) festivalEventListBean.getItems().get(i)).getFestival_event_id() %>"><%= ((FestivalEventBean) festivalEventListBean.getItems().get(i)).getName() %></option>
 						<% } %>
 					</select>
 				</div>
 				
 				<div class="form-group">	
 					<label for="inputTicket_Type">Ticket Type</label>
-					<select class="form-control" id="inputTicket_Type"">
+					<select class="form-control" id="inputTicket_Type" name="inputTicket_Type">
 						<% for(int i=0; i<ticketTypeListBean.getItems().size(); i++) { %>
-							<option><%= ((TicketTypeBean) ((Pair) ticketTypeListBean.getItems().get(i)).getLeft()).getType() %> (<%= String.format("%.2f", ((TicketPriceBean) ((Pair) ticketTypeListBean.getItems().get(i)).getRight()).getPrice()) %> €) </option>
+							<option value="<%= ((TicketTypeBean) ((Pair) ticketTypeListBean.getItems().get(i)).getLeft()).getTicket_type_id() %>"><%= ((TicketTypeBean) ((Pair) ticketTypeListBean.getItems().get(i)).getLeft()).getType() %> (<%= String.format("%.2f", ((TicketPriceBean) ((Pair) ticketTypeListBean.getItems().get(i)).getRight()).getPrice()) %> €) </option>
 						<% } %>
 					</select>
 				</div>
 				
 				<div class="form-group">	
 					<label for="inputFirst_Name">First Name</label>
-					<input type="text" required class="form-control" id="inputFirst_Name" placeholder="First Name">
+					<input type="text" required class="form-control" id="inputFirst_Name" name="inputFirst_Name" placeholder="First Name">
 				</div>
 				
 				<div class="form-group">	
 					<label for="inputLast_Name">Last Name</label>
-					<input type="text" required class="form-control" id="inputLast_Name" placeholder="Last Name">
+					<input type="text" required class="form-control" id="inputLast_Name" name="inputLast_Name" placeholder="Last Name">
 				</div>
 				
 				<div class="form-group">	
 					<label for="inputEmail">E-Mail</label>
-					<input type="text" required class="form-control" id="inputEmail" placeholder="E-Mail">
+					<input type="text" required class="form-control" id="inputEmail" name="inputEmail" placeholder="E-Mail">
 				</div>
 				
 				<div class="form-group">	
 					<label for="inputPhone">Phone</label>
-					<input type="text" class="form-control" id="inputPhone" placeholder="Phone">					
+					<input type="text" class="form-control" id="inputPhone" name="inputPhone" placeholder="Phone">					
 				</div>
 				
 				<div class="form-group">	
 					<label for="inputBirthdate">Birthdate</label>
-					<input type="date" required class="form-control" id="inputBirthdate" placeholder="Birthdate">
+					<input type="date" required class="form-control" id="inputBirthdate" name="inputBirthdate" placeholder="Birthdate">
 				</div>
 				
 				<div class="form-group">	
 					<label for="inputSex">Sex</label>
-					<select class="form-control" id="inputSex"">
+					<select class="form-control" id="inputSex" name="inputSex">
 						<% for(int i=0; i<sexListBean.getItems().size(); i++) { %>
 							<option><%= sexListBean.getItems().get(i) %></option>
 						<% } %>
@@ -85,17 +87,17 @@
 								
 				<div class="form-group">	
 					<label for="inputAddress">Address</label>
-					<input type="text" required class="form-control" id="inputAddress" placeholder="Number Street, County, Federal State Postcode">					
+					<input type="text" required class="form-control" id="inputAddress" name="inputAddress" placeholder="Number Street, County, Federal State Postcode">					
 				</div>
 				
 				<div class="form-group">	
 					<label for="inputCountry">Country</label>
-					<input type="text" required class="form-control" id="inputCountry" placeholder="Country">
+					<input type="text" required class="form-control" id="inputCountry" name="inputCountry" placeholder="Country">
 				</div>
 				
 				<div class="form-group" style="padding-bottom:20px">	
 					<label for="inputPayment_Method">Payment Method</label>					
-					<select class="form-control" id="inputPayment_Method"">
+					<select class="form-control" id="inputPayment_Method" name="inputPayment_Method">
 						<% for(int i=0; i<paymentMethodListBean.getItems().size(); i++) { %>
 							<option><%= paymentMethodListBean.getItems().get(i) %></option>
 						<% } %>

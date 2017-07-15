@@ -1,6 +1,6 @@
 package beans;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class VisitorBean {
 
@@ -8,7 +8,7 @@ public class VisitorBean {
 	private String email;
 	private String last_name;
 	private String first_name;
-	private String adddress;
+	private String address;
 	private String country;
 	private Date birthdate;
 	private String phone;
@@ -38,11 +38,11 @@ public class VisitorBean {
 	public void setFirst_name(String first_name) {
 		this.first_name = first_name;
 	}
-	public String getAdddress() {
-		return adddress;
+	public String getAddress() {
+		return address;
 	}
-	public void setAdddress(String adddress) {
-		this.adddress = adddress;
+	public void setAdddress(String address) {
+		this.address = address;
 	}
 	public String getCountry() {
 		return country;
