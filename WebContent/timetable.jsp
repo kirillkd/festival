@@ -38,61 +38,59 @@
 		
 			<nav class="navbar navbar-default">
 
-			<div class="container-fluid">
-
-				<ul class="nav navbar-nav">
-					<li><a>Please enter username and password: </a>
-					<li>
-				</ul>
-
-				<form class="navbar-form" action="/festival/checkUsername"
-					method="post">
-					<input type="text" required class="form-control"
-						placeholder="username" id="username" name="username">
-						<input type="password" required class="form-control"
-						placeholder="password" id="password_id"
-						name="password">
-						<button type="submit" class="btn btn-primary navbar-btn">Submit</button>
-						
-				</form>
+				<div class="container-fluid">
+	
+					<ul class="nav navbar-nav">
+						<li><a>Please enter username and password: </a>
+						<li>
+					</ul>
+	
+					<form class="navbar-form" action="/festival/checkUsername"
+						method="post">
+						<input type="text" required class="form-control"
+							placeholder="username" id="username" name="username">
+							<input type="password" required class="form-control"
+							placeholder="password" id="password_id"
+							name="password">
+							<button type="submit" class="btn btn-primary navbar-btn">Submit</button>
+							
+					</form>
+				</div>
+			</nav>
+			
+			<div class="container">
 				
-				<form class="navbar-form" action="/festival/createTimetable" method="post">			
+				<form action="/festival/createTimetable" method="post">			
 					<input type="hidden" name="username" value="<%= request.getAttribute("username") %>" >
 					
 					<% if (((ArrayList) request.getAttribute("bands")).size() > 0) { %>
 						
 						<input type="hidden" name="bands" value="<%= bands.size()%>" >
 						
-						<% for(int i = 0; i < bands.size() ; i++){%>					
-							<p> <%= ((BandBean) bands.get(i)).getName() %> </p>
+						<% for(int i = 0; i < bands.size() ; i++) { %>					
 							
-														
-							<fieldset>
-							<input type="hidden" name="<%= i %>.band" value="<%= ((BandBean) bands.get(i)).getName() %>">
+							<div class="form-group">
 							
-							<input type="radio" name="<%= i %>.preferences" id="1" value="1">
-							<label for="1"> 1</label><br>
-							<input type="radio" name="<%= i %>.preferences" id="2" value="2">
-							<label for="2"> 2</label><br>
-							<input type="radio" name="<%= i %>.preferences" id="3" value="3">
-							<label for="3"> 3</label><br>
-							<input type="radio" name="<%= i %>.preferences" id="4" value="4">
-							<label for="4"> 4</label><br>
-							<input type="radio" name="<%= i %>.preferences" id="5" value="5">
-							<label for="5"> 5</label><br>
-							</fieldset>
+								<label><%= ((BandBean) bands.get(i)).getName() %></label>		
+								
+								<fieldset>
+									<input type="hidden" name="<%= i %>.band" value="<%= ((BandBean) bands.get(i)).getName() %>">
+								
+									<label class="radio-inline" for="1"><input type="radio" name="<%= i %>.preferences" id="1" value="1">1</label>
+									<label class="radio-inline" for="2"><input type="radio" name="<%= i %>.preferences" id="2" value="2">2</label>
+									<label class="radio-inline" for="3"><input type="radio" name="<%= i %>.preferences" id="3" value="3">3</label>
+									<label class="radio-inline" for="4"><input type="radio" name="<%= i %>.preferences" id="4" value="4">4</label>
+									<label class="radio-inline" for="5"><input type="radio" name="<%= i %>.preferences" id="5" value="5">5</label>
+								</fieldset>
 							
-						 <% } %>
+							</div>
+						<% } %>
 						  
-						  	<button type="submit" class="btn btn-primary navbar-btn">Submit</button>
+						<button type="submit" class="btn btn-primary navbar-btn">Submit</button>
 						 
 					<% } %>
-				 </form>	
-					
-										
-		
-				</div>
-			</nav>
+				 </form>
+			</div>
 		</div>			
 	</body>
 </html>
