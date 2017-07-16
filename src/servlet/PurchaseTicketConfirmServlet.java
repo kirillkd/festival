@@ -54,6 +54,8 @@ public class PurchaseTicketConfirmServlet extends HttpServlet {
 				
 			purchaseTicketDao.createDatabaseEntries(festivalEventBean, ticketTypeBean, visitorBean, ticketBean);
 			
+			purchaseTicketDao.closeConnection();
+			
 			req.setAttribute("success", "A new ticket was successfully purchased!");
 			
 		} catch (ClassNotFoundException | SQLException | ParseException e) {
