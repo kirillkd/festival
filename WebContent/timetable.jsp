@@ -56,23 +56,35 @@
 				</form>
 									
 					<% if (((ArrayList) request.getAttribute("bands")).size() > 0) { %>
+						
+						<input type="hidden" name="bands" value="<%= bands.size()%>" >
+						
 						<% for(int i = 0; i < bands.size() ; i++){%>					
 							<p> <%= ((BandBean) bands.get(i)).getName() %> </p>
 							
-							<input type="radio" id="1" value="1">
+														
+							<fieldset>
+							<input type="hidden" name="<%= i %>.band" value="<%= ((BandBean) bands.get(i)).getName() %>">
+							
+							<input type="radio" name="<%= i %>.preferences" id="1" value="1">
 							<label for="1"> 1</label><br>
-							<input type="radio" id="2" value="2">
+							<input type="radio" name="<%= i %>.preferences" id="2" value="2">
 							<label for="2"> 2</label><br>
-							<input type="radio" id="3" value="3">
+							<input type="radio" name="<%= i %>.preferences" id="3" value="3">
 							<label for="3"> 3</label><br>
-							<input type="radio" id="4" value="4">
+							<input type="radio" name="<%= i %>.preferences" id="4" value="4">
 							<label for="4"> 4</label><br>
-							<input type="radio" id="5" value="5">
+							<input type="radio" name="<%= i %>.preferences" id="5" value="5">
 							<label for="5"> 5</label><br>
+							</fieldset>
 							
-							
-						 <% } %>  
+						 <% } %>
+						  <form class="navbar-form" action="/festival/createTimetable" method="post">
+						  	<button type="submit" class="btn btn-primary navbar-btn">Submit</button>
+						  </form>
 					<% } %>
+					
+					
 										
 		
 				</div>
