@@ -34,6 +34,7 @@ public class CheckUsernameServlet extends HttpServlet {
 	    	VisitorAccountBean visitor_account = new VisitorAccountBean();
 	    	ArrayList<BandBean> bands = new ArrayList<>();
 	    	visitor_account.setUsername(req.getParameter("username"));
+	    	visitor_account.setPassword(req.getParameter("password"));
 	    	dao.getCheckUsername(visitor_account, bands);
 	    	req.setAttribute("bands", bands);						
 		}

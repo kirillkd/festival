@@ -49,7 +49,7 @@
 					method="post">
 					<input type="text" required class="form-control"
 						placeholder="username" id="username" name="username">
-						<input type="text" required class="form-control"
+						<input type="password" required class="form-control"
 						placeholder="password" id="password_id"
 						name="password">
 						<button type="submit" class="btn btn-primary navbar-btn">Submit</button>
@@ -58,6 +58,19 @@
 					<% if (((ArrayList) request.getAttribute("bands")).size() > 0) { %>
 						<% for(int i = 0; i < bands.size() ; i++){%>					
 							<p> <%= ((BandBean) bands.get(i)).getName() %> </p>
+							
+							<input type="radio" id="1" value="1">
+							<label for="1"> 1</label><br>
+							<input type="radio" id="2" value="2">
+							<label for="2"> 2</label><br>
+							<input type="radio" id="3" value="3">
+							<label for="3"> 3</label><br>
+							<input type="radio" id="4" value="4">
+							<label for="4"> 4</label><br>
+							<input type="radio" id="5" value="5">
+							<label for="5"> 5</label><br>
+							
+							
 						 <% } %>  
 					<% } %>
 										
