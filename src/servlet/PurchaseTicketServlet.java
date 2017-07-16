@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utils.Pair;
-import utils.StringToSQLDate;
+import utils.DateConverter;
 
 import dao.PurchaseTicketDAO;
 
@@ -96,7 +96,7 @@ public class PurchaseTicketServlet extends HttpServlet {
 			purchaseTicketDao.getFestivalEventInformation(festivalEventBean);
 			purchaseTicketDao.getTicketPriceInformation(ticketPriceBean, ticketTypeBean);
 						
-			visitorBean.setBirthdate(StringToSQLDate.convert(req.getParameter("inputBirthdate")));
+			visitorBean.setBirthdate(DateConverter.SQLDateToJavaDate(req.getParameter("inputBirthdate")));
 			
 			req.setAttribute("festivalEventBean", festivalEventBean);
 			req.setAttribute("ticketTypeBean", ticketTypeBean);

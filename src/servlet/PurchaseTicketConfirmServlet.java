@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import utils.StringToSQLDate;
+import utils.DateConverter;
 
 import beans.FestivalEventBean;
 import beans.TicketBean;
@@ -50,15 +51,15 @@ public class PurchaseTicketConfirmServlet extends HttpServlet {
 		try {
 			PurchaseTicketDAO purchaseTicketDao = new PurchaseTicketDAO();
 						
-			visitorBean.setBirthdate(StringToSQLDate.convert(req.getParameter("inputBirthdate")));
-				
+			visitorBean.setBirthdate(Date.valueOf(req.getParameter("inputBirthdate")));
+			
 			purchaseTicketDao.createDatabaseEntries(festivalEventBean, ticketTypeBean, visitorBean, ticketBean);
 			
 			purchaseTicketDao.closeConnection();
 			
 			req.setAttribute("success", "A new ticket was successfully purchased!");
 			
-		} catch (ClassNotFoundException | SQLException | ParseException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			req.setAttribute("error", e.getMessage());
 		}	
