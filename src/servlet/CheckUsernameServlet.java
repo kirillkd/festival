@@ -36,7 +36,8 @@ public class CheckUsernameServlet extends HttpServlet {
 	    	visitor_account.setUsername(req.getParameter("username"));
 	    	visitor_account.setPassword(req.getParameter("password"));
 	    	dao.getCheckUsername(visitor_account, bands);
-	    	req.setAttribute("bands", bands);						
+	    	req.setAttribute("bands", bands);
+	    	req.setAttribute("username", visitor_account.getUsername());
 		}
 		catch (SQLException | ClassNotFoundException | RuntimeException e) {
 			req.setAttribute("error", e.getMessage());

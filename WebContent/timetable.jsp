@@ -53,8 +53,12 @@
 						placeholder="password" id="password_id"
 						name="password">
 						<button type="submit" class="btn btn-primary navbar-btn">Submit</button>
+						
 				</form>
-									
+				
+				<form class="navbar-form" action="/festival/createTimetable" method="post">			
+					<input type="hidden" name="username" value="<%= request.getAttribute("username") %>" >
+					
 					<% if (((ArrayList) request.getAttribute("bands")).size() > 0) { %>
 						
 						<input type="hidden" name="bands" value="<%= bands.size()%>" >
@@ -79,11 +83,11 @@
 							</fieldset>
 							
 						 <% } %>
-						  <form class="navbar-form" action="/festival/createTimetable" method="post">
+						  
 						  	<button type="submit" class="btn btn-primary navbar-btn">Submit</button>
-						  </form>
+						 
 					<% } %>
-					
+				 </form>	
 					
 										
 		

@@ -36,12 +36,8 @@ public class CreateTimetableDAO extends DAO {
 			pstmt1.setString(3, bands.get(i).getName());
 			
 
-			ResultSet rs1 = pstmt1.executeQuery();
+			pstmt1.executeUpdate();
 			
-			
-			
-			rs1.close();
-		
 		}
 		
 		connection.commit();
