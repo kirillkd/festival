@@ -50,8 +50,11 @@
 					</form>				
 										
 					<% if (((ArrayList) request.getAttribute("bands")).size() > 0) { %>
-							<p> <%= ((BandBean) bands.get(0)).getName() %> </p>
+						<% for(int i = 0; i < bands.size() ; i++){%>					
+							<p> <%= ((BandBean) bands.get(i)).getName() %> </p>
+						 <% } %>  
 					<% } %>
+										
 		
 				</div>
 			</nav>
