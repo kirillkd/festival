@@ -54,8 +54,8 @@ def main():
         
     sequence_tables = ['visitor', 'journalist', 'ticket_type', 'ticket_price', 'location', 'festival_event', 
              'application', 'provider', 'sponsor', 'vendor', 'donor', 'stage', 'band', 'song', 'timetable_entry',
-             'shop', 'wristband', 'ticket', 'department', 'employee', 'note', 'instruction', 'shift', 'newsletter',
-             'post', 'sale']
+             'product', 'shop', 'wristband', 'ticket', 'department', 'employee', 'note', 'instruction', 'shift', 
+             'newsletter', 'post', 'sale']
     for sequence in sequence_tables:
         cur.execute("select setval('{0}_{0}_id_seq', (select max({0}_id) from {0}));".format(sequence))
 
