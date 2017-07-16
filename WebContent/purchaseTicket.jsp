@@ -73,7 +73,7 @@
 				
 				<div class="form-group">	
 					<label for="inputBirthdate">Birthdate</label>
-					<input type="date" required class="form-control" id="inputBirthdate" name="inputBirthdate" placeholder="Birthdate">
+					<input type="date" required class="form-control" id="inputBirthdate" name="inputBirthdate" placeholder="01-01-1970">
 				</div>
 				
 				<div class="form-group">	
