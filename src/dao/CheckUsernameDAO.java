@@ -11,6 +11,10 @@ import beans.TimetableEntryBean;
 import beans.ProviderBean;
 
 public class CheckUsernameDAO extends DAO {
+	
+	public CheckUsernameDAO() throws ClassNotFoundException, SQLException {
+		getConnection();
+	}
 
 	public void getCheckUsername(VisitorAccountBean visitor_account,
 			ArrayList<BandBean> bands) throws RuntimeException, SQLException,

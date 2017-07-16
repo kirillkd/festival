@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.ArrayList, beans.BandBean" %>
+
 <jsp:useBean id="bands" scope="request" class="java.util.ArrayList"></jsp:useBean>
 
 <!DOCTYPE html>
