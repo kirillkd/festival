@@ -16,17 +16,14 @@ public class CreateTimetableDAO extends DAO {
 		getConnection();
 	}
 
-	public void getCreateTimetable(VisitorAccountBean visitor_account, ArrayList<TimetableEntryBean> timetable_entry,
+	public void getPreferences(VisitorAccountBean visitor_account, ArrayList<TimetableEntryBean> timetable_entry,
 			ArrayList<BandBean> bands) throws RuntimeException, SQLException,
 			ClassNotFoundException {
 
 		String query1 = "UPDATE timetable_entry AS te SET preference = ? FROM band b, provider p WHERE te.username = ? AND p.name = ? AND b.band_id = te.band_id AND p.provider_id = b.provider_id;";
-		String query2 = "SELECT b.timeslot_date, b.timeslot_start, b.timeslot_end, p.name FROM band b, provider p WHERE b.band_id = p.provider_id;";
-
 		
 		PreparedStatement pstmt1 = connection.prepareStatement(query1);
-		PreparedStatement pstmt2 = connection.prepareStatement(query2);
-
+		
 		pstmt1.setString(2, visitor_account.getUsername());
 		
 		
@@ -41,6 +38,23 @@ public class CreateTimetableDAO extends DAO {
 		}
 		
 		connection.commit();
+					
+		pstmt1.close();
+		connection.close();
+
+		
+	}
+	
+	public void getCreateTimetable(VisitorAccountBean visitor_account, ArrayList<TimetableEntryBean> timetable_entry,
+			ArrayList<BandBean> bands) throws RuntimeException, SQLException,
+			ClassNotFoundException {
+
+		String query2 = "SELECT b.timeslot_date, b.timeslot_start, b.timeslot_end, p.name FROM band b, provider p, timetable_entry te WHERE b.provider_id = p.provider_id  AND te.username=? AND te.band_id = b.band_id;";
+
+		
+		PreparedStatement pstmt2 = connection.prepareStatement(query2);
+
+		pstmt2.setString(1, visitor_account.getUsername());
 		
 		ResultSet rs2 = pstmt2.executeQuery();
 		
@@ -55,10 +69,10 @@ public class CreateTimetableDAO extends DAO {
 		
 		
 		rs2.close();
-		pstmt1.close();
 		pstmt2.close();
 		connection.close();
 
 		
 	}
+	
 }
