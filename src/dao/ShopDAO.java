@@ -66,7 +66,7 @@ public void getShopProducts(ProductBean productBean, int shopId) throws SQLExcep
 			newProduct.setName(rsProduct.getString("name"));
 			newProduct.setPrice(rsProduct.getDouble("price"));
 			newProduct.setType(rsProduct.getString("type"));
-			newProduct.setProduct_Category(product_category.valueOf(rsProduct.getString("category")));
+			newProduct.setCategory(product_category.valueOf(rsProduct.getString("category")));
 			productList.add(newProduct);
 		}
 	}

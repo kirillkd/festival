@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="utils.DateConverter" %>
 <%@ page import="beans.FestivalEventBean, beans.VisitorBean, beans.TicketBean, beans.TicketPriceBean" %>
 
 
@@ -79,7 +79,7 @@
 						</tr>
 						<tr>
 							<th>Birthdate</th>
-							<td><%= visitorBean.getBirthdate() %></td>
+							<td><%= DateConverter.SQLDateToGermanDate(visitorBean.getBirthdate()) %></td>
 							<input type="hidden" name="inputBirthdate" value="<%= visitorBean.getBirthdate() %>">
 						</tr>
 						<tr>
