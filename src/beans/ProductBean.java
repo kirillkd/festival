@@ -46,10 +46,10 @@ public class ProductBean {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public product_category getProduct_Category(){
+	public product_category getCategory(){
 		return category;
 	}
-	public void setProduct_Category(product_category category){
+	public void setCategory(product_category category){
 		this.category = category;
 	}
 

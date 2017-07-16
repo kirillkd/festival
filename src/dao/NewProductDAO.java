@@ -3,8 +3,10 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 
+import beans.ProductBean;
 import beans.ShopBean;
 import beans.GenericListBean;
 import beans.VendorBean;
@@ -82,6 +84,52 @@ public class NewProductDAO extends DAO {
 		}
 				
 		resultSet.close();
+		preparedStatement.close();
+	}
+
+
+	public void createDatabaseEntries(VendorBean vendorBean, ProductBean productBean,
+			GenericListBean<ShopBean> shopListBean) throws SQLException {
+		String insertProduct = "insert into product " +
+				"(name, price, type, category, provider_id) values " +
+				"(?, ?, ?, ?::product_category, " +
+				"(select s.provider_id " +
+				"from vendor v, sponsor s " +
+				"where v.vendor_id = ? " +
+				"and v.sponsor_id = s.sponsor_id));";
+		
+		PreparedStatement preparedStatement = connection.prepareStatement(insertProduct, Statement.RETURN_GENERATED_KEYS);
+		
+		preparedStatement.setString(1, productBean.getName());
+		preparedStatement.setDouble(2, productBean.getPrice());
+		preparedStatement.setString(3, productBean.getType());
+		preparedStatement.setString(4, productBean.getCategory().toString());
+		preparedStatement.setInt(5, vendorBean.getVendor_id());
+		
+		preparedStatement.executeUpdate();
+		
+		ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+		
+		generatedKeys.next();
+		
+		productBean.setProduct_id(generatedKeys.getInt(1));
+		
+		generatedKeys.close();
+		
+		
+		String insertSold_In = "insert into sold_in values (?, ?);";
+		
+		preparedStatement = connection.prepareStatement(insertSold_In);
+		
+		for (int i = 0; i < shopListBean.getItems().size(); i++) {			
+			preparedStatement.setInt(1, shopListBean.getItems().get(i).getShop_id());
+			preparedStatement.setInt(2, productBean.getProduct_id());
+			
+			preparedStatement.executeUpdate();
+		}
+		
+		connection.commit();
+		
 		preparedStatement.close();
 	}
 }
