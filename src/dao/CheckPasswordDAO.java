@@ -29,7 +29,7 @@ public class CheckPasswordDAO extends DAO {
 
 		pstmt1.setString(1, visitor_account.getPassword());
 		pstmt2.setString(1, visitor_account.getPassword());
-
+		
 		ResultSet rs1 = pstmt1.executeQuery();
 		ResultSet rs2 = pstmt2.executeQuery();
 

@@ -37,18 +37,24 @@
 			<% } %>
 		
 			<nav class="navbar navbar-default">
-		
-				<div class="container-fluid">
-					
-					<ul class="nav navbar-nav">
-						<li><a>Username: </a><li>
-					</ul>
-		
-					<form class="navbar-form" action="/festival/checkUsername" method="post">
-						<input type="text" required class="form-control" placeholder="Please insert username" id="username" name="username">
-						<button type="submit" class="btn btn-primary navbar-btn">okay</button>
-					</form>				
-										
+
+			<div class="container-fluid">
+
+				<ul class="nav navbar-nav">
+					<li><a>Please enter username and password: </a>
+					<li>
+				</ul>
+
+				<form class="navbar-form" action="/festival/checkUsername"
+					method="post">
+					<input type="text" required class="form-control"
+						placeholder="username" id="username" name="username">
+						<input type="text" required class="form-control"
+						placeholder="password" id="password_id"
+						name="password">
+						<button type="submit" class="btn btn-primary navbar-btn">Submit</button>
+				</form>
+									
 					<% if (((ArrayList) request.getAttribute("bands")).size() > 0) { %>
 						<% for(int i = 0; i < bands.size() ; i++){%>					
 							<p> <%= ((BandBean) bands.get(i)).getName() %> </p>
