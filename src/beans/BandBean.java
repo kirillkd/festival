@@ -1,16 +1,19 @@
 package beans;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 public class BandBean extends ProviderBean{
 
 	private int band_id;
 	private boolean headliner;
-	private Date timeslot_date;
-	private Date timeslot_start;
-	private Date timeslot_end;
+	private LocalDate timeslot_date;
+	private LocalTime timeslot_start;
+	private LocalTime timeslot_end;
 	private String press_information;
 	private boolean is_cancelled;
+	
 	public int getBand_id() {
 		return band_id;
 	}
@@ -23,22 +26,22 @@ public class BandBean extends ProviderBean{
 	public void setHeadliner(boolean headliner) {
 		this.headliner = headliner;
 	}
-	public Date getTimeslot_date() {
+	public LocalDate getTimeslot_date() {
 		return timeslot_date;
 	}
-	public void setTimeslot_date(Date timeslot_date) {
+	public void setTimeslot_date(LocalDate timeslot_date) {
 		this.timeslot_date = timeslot_date;
 	}
-	public Date getTimeslot_start() {
+	public LocalTime getTimeslot_start() {
 		return timeslot_start;
 	}
-	public void setTimeslot_start(Date timeslot_start) {
+	public void setTimeslot_start(LocalTime timeslot_start) {
 		this.timeslot_start = timeslot_start;
 	}
-	public Date getTimeslot_end() {
+	public LocalTime getTimeslot_end() {
 		return timeslot_end;
 	}
-	public void setTimeslot_end(Date timeslot_end) {
+	public void setTimeslot_end(LocalTime timeslot_end) {
 		this.timeslot_end = timeslot_end;
 	}
 	public String getPress_information() {
