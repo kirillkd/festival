@@ -31,7 +31,9 @@ public class CreateTimetableServlet extends HttpServlet {
 			throws ServletException, IOException {
 				
 		try {
-			CreateTimetableDAO dao = new CreateTimetableDAO();
+			CreateTimetableDAO dao_pref = new CreateTimetableDAO();
+			CreateTimetableDAO dao_time = new CreateTimetableDAO();
+			
 	    	VisitorAccountBean visitor_account = new VisitorAccountBean();
 	    	ArrayList<BandBean> bands = new ArrayList<>();
 	    	ArrayList<TimetableEntryBean> timetable_entry = new ArrayList<>();
@@ -49,8 +51,18 @@ public class CreateTimetableServlet extends HttpServlet {
 	    		bands.add(band);
 	    	}
 	    	
-	    	dao.getCreateTimetable(visitor_account, timetable_entry, bands);
-	    	req.setAttribute("bands", bands);	
+	    	dao_pref.getPreferences(visitor_account, timetable_entry, bands);
+	    	
+	    	req.setAttribute("bands", bands);
+	    	
+	    	// Testing
+		    //System.out.println(bands.get(0).getTimeslot_date());
+	    	
+	    	ArrayList<BandBean> times = new ArrayList<>();
+	    	dao_time.getCreateTimetable(visitor_account, times);
+		    req.setAttribute("times", times);
+		    //req.getParameter("times");
+		    //System.out.println(times.get(0).getTimeslot_date());
 		}
 		catch (SQLException | ClassNotFoundException | RuntimeException e) {
 			req.setAttribute("error", e.getMessage());
