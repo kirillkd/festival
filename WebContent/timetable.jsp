@@ -49,12 +49,12 @@
 			<div class="container">
 				
 				<form action="/festival/createTimetable" method="post">			
+					
 					<input type="hidden" name="username" value="<%= request.getAttribute("username") %>" >
-					
-					
+									
 					<% if (((ArrayList) request.getAttribute("bands")).size() > 0) { %>
 						
-						<label>Please rate your bands:</label>
+						<h3>Please rate your bands (5 best - 1 worst):</h3>
 						<input type="hidden" name="bands" value="<%= bands.size()%>" >
 						
 						<% for(int i = 0; i < bands.size() ; i++) { %>					
@@ -68,7 +68,7 @@
 								
 									<label class="radio-inline" for="1"><input type="radio" name="<%= i %>.preferences" id="1" value="1">1</label>
 									<label class="radio-inline" for="2"><input type="radio" name="<%= i %>.preferences" id="2" value="2">2</label>
-									<label class="radio-inline" for="3"><input type="radio" name="<%= i %>.preferences" id="3" value="3">3</label>
+									<label class="radio-inline" for="3"><input type="radio" name="<%= i %>.preferences" id="3" value="3" checked>3</label>
 									<label class="radio-inline" for="4"><input type="radio" name="<%= i %>.preferences" id="4" value="4">4</label>
 									<label class="radio-inline" for="5"><input type="radio" name="<%= i %>.preferences" id="5" value="5">5</label>
 								</fieldset>
@@ -84,12 +84,14 @@
 
 			
 			<div class="container">
+					
+					<input type="hidden" name="username" value="<%= request.getAttribute("username") %>" >
 							
 					<% if (((ArrayList) request.getAttribute("times")) != null) { %>
 						
 						<h2>Your timetable</h2>
 										
-						<table border="4" cellspacing="200" cellpadding="500">					
+						<table class="table table-bordered">					
 						<tr>
 										<th> Band name </th>
 										<th> Date </th>
