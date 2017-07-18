@@ -105,12 +105,12 @@
 									
 					<div class="form-group">	
 						<label for="inputAddress">Address</label>
-						<input type="text" required class="form-control" id="inputAddress" name="inputAddress" placeholder="Number Street, County, Federal State Postcode">					
+						<input type="text" required class="form-control" id="inputAddress" name="inputAddress" placeholder="Number Street, County, Federal State Postcode" value="<%= Optional.ofNullable(visitorBean.getAddress()).orElse("") %>">
 					</div>
 					
 					<div class="form-group">	
 						<label for="inputCountry">Country</label>
-						<input type="text" required class="form-control" id="inputCountry" name="inputCountry" placeholder="Country">
+						<input type="text" required class="form-control" id="inputCountry" name="inputCountry" placeholder="Country" value="<%= Optional.ofNullable(visitorBean.getCountry()).orElse("") %>">
 					</div>
 					
 					<div class="form-group" style="padding-bottom:20px">	
