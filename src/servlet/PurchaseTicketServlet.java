@@ -103,8 +103,6 @@ public class PurchaseTicketServlet extends HttpServlet {
 		GenericListBean<String> sexListBean = new GenericListBean<>();
 		GenericListBean<String> paymentMethodListBean = new GenericListBean<>();
 		
-		
-		
 		try {
 			PurchaseTicketDAO purchaseTicketDao = new PurchaseTicketDAO();
 			
@@ -130,7 +128,7 @@ public class PurchaseTicketServlet extends HttpServlet {
 			
 			purchaseTicketDao.getFestivalEventInformation(festivalEventBean);
 			purchaseTicketDao.getTicketPriceInformation(ticketPriceBean, ticketTypeBean);
-				
+			
 				
 			purchaseTicketDao.closeConnection();
 			

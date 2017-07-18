@@ -123,6 +123,9 @@ public class PurchaseTicketDAO extends DAO {
 		if (visitorBean.getEmail() == null || visitorBean.getEmail().trim().equals("")) {
 			throw new IllegalArgumentException("Please enter your E-Mail Address!");
 		}
+		if (!visitorBean.getEmail().contains("@")) {
+			throw new IllegalArgumentException("Please enter a valid E-Mail Address");
+		}
 		if (visitorBean.getAddress() == null || visitorBean.getAddress().trim().equals("")) {
 			throw new IllegalArgumentException("Please enter your address!");
 		}
