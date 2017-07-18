@@ -55,14 +55,10 @@ public class CreateTimetableServlet extends HttpServlet {
 	    	
 	    	req.setAttribute("bands", bands);
 	    	
-	    	// Testing
-		    //System.out.println(bands.get(0).getTimeslot_date());
-	    	
 	    	ArrayList<BandBean> times = new ArrayList<>();
 	    	dao_time.getCreateTimetable(visitor_account, times);
 		    req.setAttribute("times", times);
-		    //req.getParameter("times");
-		    //System.out.println(times.get(0).getTimeslot_date());
+		    
 		}
 		catch (SQLException | ClassNotFoundException | RuntimeException e) {
 			req.setAttribute("error", e.getMessage());

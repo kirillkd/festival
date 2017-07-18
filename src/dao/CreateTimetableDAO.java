@@ -60,8 +60,6 @@ public class CreateTimetableDAO extends DAO {
 		
 		ResultSet rs2 = pstmt2.executeQuery();
 		
-		//ArrayList<BandBean> times = new ArrayList<>();
-		
 		while (rs2.next()) {
 				BandBean bandbean = new BandBean();
 			    
@@ -76,15 +74,7 @@ public class CreateTimetableDAO extends DAO {
 			    
 			    bandbean.setName(rs2.getString("name"));
 			    
-			    //bands.add(bandbean); //fuer ausgabe relevant
-			    
 			    times.add(bandbean);
-
-			    // Testing
-			    //System.out.println(times.get(0).getName());
-			    //System.out.println(times.get(0).getTimeslot_date());
-			    //System.out.println(times.get(0).getTimeslot_start());
-			    //System.out.println(times.get(0).getTimeslot_end());
 			    			
 		}
 		
