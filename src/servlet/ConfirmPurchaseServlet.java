@@ -1,12 +1,15 @@
 package servlet;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import dao.ShopDAO;
 import beans.ProductBean;
@@ -43,22 +46,45 @@ public class ConfirmPurchaseServlet extends HttpServlet {
 				quantities.add(Integer.parseInt(request.getParameterValues("quantity")[i]));
 			}
 			
-			response.getWriter().append("Served at: ").append(request.getContextPath());
-			//String[] productQty = request.getParameterValues("quantity");
-			//System.out.println(productQty);
 			ShopDAO dao = new ShopDAO();
+			
 			WristbandBean wb = new WristbandBean();
+			wb.setV_id(v_id);
+			
 			dao.getWristbandBalance(wb, v_id);
 			
 			dao.computeOrderPrice(productsBean, quantities);
-			System.out.println(productsBean.getSelectedProductsPrice());
+			
+			String wristbandId = UUID.randomUUID().toString();
+			//System.out.println("confirm  purchase servlet " + wristbandId);
+			
+			String amountID = UUID.randomUUID().toString();
+			request.getSession().setAttribute(wristbandId, wb);
+			request.getSession().setAttribute(amountID, productsBean.getSelectedProductsPrice());
+			
+			request.setAttribute("wristbandId", wristbandId);
+			request.setAttribute("amountID", amountID);
+			
+			//System.out.println("confirm purchase wbid " + wb.getWristband_id());
+			
+			if (wb.getBalance() >= productsBean.getSelectedProductsPrice()) {
+				//dao.alterWristbandBalance(wb, productsBean.getSelectedProductsPrice());
+				request.setAttribute("productsBean", productsBean);
+				request.setAttribute("quantities", quantities);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/confirmPurchase.jsp");
+				dispatcher.forward(request, response);
+			}
+			else {
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/noBalance.jsp");
+				dispatcher.forward(request, response);
+			}
+			//System.out.println(productsBean.getSelectedProductsPrice());
 			//System.out.println(quantities.toString());
 			
 		} catch (Throwable e) {
     		e.printStackTrace();
     		request.setAttribute("error", e.toString() + e.getMessage());
     	}
-		 
 	}
 
 	/**

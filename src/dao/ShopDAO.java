@@ -100,5 +100,24 @@ public class ShopDAO extends DAO{
 		}
 		productBean.setSelectedProductsPrice(totalPrice);
 	}
+	
+	public void alterWristbandBalance (WristbandBean wb, double amount) throws SQLException, ClassNotFoundException {		
+		
+		getConnection();
+		
+		double newBalance = wb.getBalance() - amount;
+		
+		String changeBal = "UPDATE wristband SET balance=? WHERE visitor_id=" + wb.getV_id() + ";";
+		//System.out.println("shopdao new balance: " + newBalance);
+		
+		PreparedStatement pstmt = connection.prepareStatement(changeBal);	
+		pstmt.setDouble(1, newBalance);
+		System.out.println("prep stat "+pstmt);
+		System.out.println("shop dao query result: " + pstmt.executeUpdate());
+		connection.commit();
+		
+		pstmt.close();
+		closeConnection();
+	}
 
 }
