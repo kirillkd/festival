@@ -88,8 +88,18 @@ public class NewProductDAO extends DAO {
 	}
 
 
+	public void validateInput(ProductBean productBean) {
+		if (productBean.getName() == null || productBean.getName().trim().equals("")) {
+			throw new IllegalArgumentException("Please enter the product name!");
+		}
+		if (productBean.getType() == null || productBean.getType().trim().equals("")) {
+			throw new IllegalArgumentException("Please enter the product type!");
+		}
+	}
+	
+
 	public void createDatabaseEntries(VendorBean vendorBean, ProductBean productBean,
-			GenericListBean<ShopBean> shopListBean) throws SQLException {
+			GenericListBean<ShopBean> selectedShopListBean) throws SQLException {
 		String insertProduct = "insert into product " +
 				"(name, price, type, category, provider_id) values " +
 				"(?, ?, ?, ?::product_category, " +
@@ -121,8 +131,8 @@ public class NewProductDAO extends DAO {
 		
 		preparedStatement = connection.prepareStatement(insertSold_In);
 		
-		for (int i = 0; i < shopListBean.getItems().size(); i++) {			
-			preparedStatement.setInt(1, shopListBean.getItems().get(i).getShop_id());
+		for (int i = 0; i < selectedShopListBean.getItems().size(); i++) {			
+			preparedStatement.setInt(1, selectedShopListBean.getItems().get(i).getShop_id());
 			preparedStatement.setInt(2, productBean.getProduct_id());
 			
 			preparedStatement.executeUpdate();
