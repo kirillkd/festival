@@ -53,7 +53,7 @@ public class CreateTimetableServlet extends HttpServlet {
 	    	dao.getPreferences(visitor_account, timetable_entry, bands);
 	    	
 	    	req.setAttribute("bands", bands);
-	    	req.setAttribute("username", req.getAttribute("username"));
+	    	req.setAttribute("username", req.getParameter("username"));
 	    	
 	    	ArrayList<BandBean> times = new ArrayList<>();
 	    	dao.getCreateTimetable(visitor_account, times);
