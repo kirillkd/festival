@@ -9,36 +9,39 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>		
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Visitor</title>
+<title>Purchase item</title>
 </head>
 <body>
 <%@include file="header.html" %>
 
 
 <div class="container">
-<div class="form-group">
-  <label for="usr">Visitor Id:</label>
-  <input type="text" class="form-control" id="usr">
-</div>
+	
+	<!--  <div class="form-group">
+ 		<label for="usr">Visitor Id:</label>
+  		<input type="text" class="form-control" id="usr">
+	</div>-->
+  
   <table class="table table-hover">
     <thead>
       <tr>
-      <th>Shop Id</th>
+      	<th>Shop Id</th>
         <th>Shop Name</th>
         <th>Category</th>
       </tr>
     </thead>
+    
     <tbody>
-    <%
-      for(int i = 0; i < shopsBean.getShopList().size(); i++){%>
-	<tr>
-    <td><%= shopsBean.getShopList().get(i).getShop_id() %></td>
-    <td><a href="./ProductsServlet?shopid=<%= shopsBean.getShopList().get(i).getShop_id()%>"><%= shopsBean.getShopList().get(i).getName() %></a></td>
-    <td><%= shopsBean.getShopList().get(i).getCategory() %></td>
-  </tr>  
- <% } %>  
-      
+    	<%
+      	for(int i = 0; i < shopsBean.getShopList().size(); i++){%>
+			<tr>
+    			<td><%= shopsBean.getShopList().get(i).getShop_id() %></td>
+    			<td><a href="./ProductsServlet?shopid=<%= shopsBean.getShopList().get(i).getShop_id()%>"><%= shopsBean.getShopList().get(i).getName() %></a></td>
+    			<td><%= shopsBean.getShopList().get(i).getCategory() %></td>
+  			</tr>  
+ 		<% } %>  
     </tbody>
+    </table>
 </div>
 
 </body>

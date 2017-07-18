@@ -14,7 +14,14 @@ public class ProductBean {
 	}
 	private product_category category;
 	private List <ProductBean> productsList = new ArrayList<ProductBean>();
+	private double selectedProductsPrice;
 	
+	public double getSelectedProductsPrice() {
+		return selectedProductsPrice;
+	}
+	public void setSelectedProductsPrice(double selectedProductsPrice) {
+		this.selectedProductsPrice = selectedProductsPrice;
+	}
 	public List<ProductBean> getProductsList() {
 		return productsList;
 	}

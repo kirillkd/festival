@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 import beans.ProductBean;
 import beans.ShopBean;
@@ -38,7 +39,13 @@ public class ProductsServlet extends HttpServlet {
         	ShopDAO dao = new ShopDAO();
         	ProductBean product = new ProductBean();
         	dao.getShopProducts(product, shopId);
-			request.setAttribute("productsBean", product);
+        	
+        	String productsBeanId = UUID.randomUUID().toString();
+        	//System.out.println("id from products servlet:" + productsBeanId);
+        	request.getSession().setAttribute(productsBeanId, product);
+			
+        	request.setAttribute("productsBeanId", productsBeanId);
+        	request.setAttribute("productsBean", product);
 
     	} catch (Throwable e) {
     		e.printStackTrace();

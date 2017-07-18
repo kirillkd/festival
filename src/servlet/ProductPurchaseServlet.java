@@ -36,9 +36,7 @@ public class ProductPurchaseServlet extends HttpServlet {
 		try {
         	ShopDAO dao = new ShopDAO();
         	ShopBean shop = new ShopBean();
-        	ProductBean product = new ProductBean();
         	dao.getShops(shop);
-        	dao.getShopProducts(product, 1);
 			request.setAttribute("shopsBean", shop);
 
     	} catch (Throwable e) {
