@@ -17,36 +17,23 @@
 			Music Festival Management System
 		</title>
 		
-		<div class="container">
-			<h1>Music Festival Management System</h1>
-			</br>
+		<%@include file="header.html" %>
 		
-			<nav class="navbar navbar-default">
-		
-				<div class="container-fluid">
-		
-					<div class="navbar-header">
-						<a class="navbar-brand" href="index.jsp">Start page</a>
-					</div>
-		
-				</div>
-			</nav>
+		<div class="container" style="padding-bottom:50px">
 			
 			<% if (request.getAttribute("error") != null) { %>
 				<%= request.getAttribute("error") %>
 			<% } %>
 		
-			<nav class="navbar navbar-default">
 
 				<div class="container-fluid">
 	
-					<ul class="nav navbar-nav">
-						<li><a>Please enter username and password: </a>
-						<li>
-					</ul>
+
+					
 	
-					<form class="navbar-form" action="/festival/checkUsername"
+					<form class="form-inline" action="/festival/checkUsername"
 						method="post">
+						<label>Please enter username and password:</label>
 						<input type="text" required class="form-control"
 							placeholder="username" id="username" name="username">
 							<input type="password" required class="form-control"
@@ -58,14 +45,16 @@
 				</div>
 			</nav>
 			
-			<nav class="navbar navbar-default">
+
 			<div class="container">
 				
 				<form action="/festival/createTimetable" method="post">			
-					<input type="hidden" name="username" value="<%= request.getAttribute("username") %>" >
 					
+					<input type="hidden" name="username" value="<%= request.getAttribute("username") %>" >
+									
 					<% if (((ArrayList) request.getAttribute("bands")).size() > 0) { %>
 						
+						<h3>Please rate your bands (5 best - 1 worst):</h3>
 						<input type="hidden" name="bands" value="<%= bands.size()%>" >
 						
 						<% for(int i = 0; i < bands.size() ; i++) { %>					
@@ -79,7 +68,7 @@
 								
 									<label class="radio-inline" for="1"><input type="radio" name="<%= i %>.preferences" id="1" value="1">1</label>
 									<label class="radio-inline" for="2"><input type="radio" name="<%= i %>.preferences" id="2" value="2">2</label>
-									<label class="radio-inline" for="3"><input type="radio" name="<%= i %>.preferences" id="3" value="3">3</label>
+									<label class="radio-inline" for="3"><input type="radio" name="<%= i %>.preferences" id="3" value="3" checked>3</label>
 									<label class="radio-inline" for="4"><input type="radio" name="<%= i %>.preferences" id="4" value="4">4</label>
 									<label class="radio-inline" for="5"><input type="radio" name="<%= i %>.preferences" id="5" value="5">5</label>
 								</fieldset>
@@ -92,32 +81,43 @@
 					<% } %>
 				 </form>
 			</div>
-			</nav>
+
 			
-			<nav class="navbar navbar-default">
 			<div class="container">
-				
-				<form action="/festival/createTimetable" method="post">			
-					<input type="hidden" name="username" value="<%= request.getAttribute("username") %>" >
 					
-					<% if (((ArrayList) request.getAttribute("times")).size() > 0) { %>
+					<input type="hidden" name="username" value="<%= request.getAttribute("username") %>" >
+							
+					<% if (((ArrayList) request.getAttribute("times")) != null) { %>
 						
-						<input type="hidden" name="times" value="<%= ((ArrayList) request.getAttribute("times")).size()%>" >
-												
+						<h2>Your timetable</h2>
+										
+						<table class="table table-bordered">					
+						<tr>
+										<th> Band name </th>
+										<th> Date </th>
+										<th> Start time </th>
+										<th> End time </th>
+									</tr>
+						
 						<% for(int i = 0; i < (((ArrayList) request.getAttribute("times")).size()) ; i++) { %>					
 							
 							<div class="form-group">
-							
-								<label><%= ((BandBean) (((ArrayList) request.getAttribute("times")).size()).get(i)).getName() %></label>		
-							
+								
+									<tr>
+										<td><%= ((BandBean) ((ArrayList) request.getAttribute("times")).get(i)).getName() %></td>
+										<td><%= ((BandBean) ((ArrayList) request.getAttribute("times")).get(i)).getTimeslot_date() %></td>
+										<td><%= ((BandBean) ((ArrayList) request.getAttribute("times")).get(i)).getTimeslot_start() %></td>
+										<td><%= ((BandBean) ((ArrayList) request.getAttribute("times")).get(i)).getTimeslot_end() %></td>
+									</tr>
+								
 							</div>
 						<% } %>
-						
-					<% } %>
-				 </form>
+						</table>
+						<h3>Enjoy your festival!</h3>
+					<% } %>		
 			</div>
-			</nav>
 			
-		</div>			
+		</div>
+				
 	</body>
 </html>

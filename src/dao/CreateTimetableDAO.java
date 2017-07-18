@@ -32,6 +32,7 @@ public class CreateTimetableDAO extends DAO {
 		
 		for (int i = 0; i < bands.size(); i++){
 		
+			
 			pstmt1.setInt(1, timetable_entry.get(i).getPreference());
 			pstmt1.setString(3, bands.get(i).getName());
 			
@@ -43,7 +44,6 @@ public class CreateTimetableDAO extends DAO {
 		connection.commit();
 					
 		pstmt1.close();
-		connection.close();
 	
 	}
 
@@ -51,7 +51,7 @@ public class CreateTimetableDAO extends DAO {
 	public void getCreateTimetable(VisitorAccountBean visitor_account, ArrayList<BandBean> times) throws RuntimeException, SQLException,
 			ClassNotFoundException {
 		
-		String query2 = "SELECT b.timeslot_date, b.timeslot_start, b.timeslot_end, p.name FROM band b, provider p, timetable_entry te WHERE b.provider_id = p.provider_id  AND te.username=? AND te.band_id = b.band_id;";
+		String query2 = "SELECT b.timeslot_date, b.timeslot_start, b.timeslot_end, p.name FROM band b, provider p, timetable_entry te WHERE b.provider_id = p.provider_id  AND te.username=? AND te.band_id = b.band_id ORDER BY b.timeslot_date, b.timeslot_start, te.preference;";
 
 		
 		PreparedStatement pstmt2 = connection.prepareStatement(query2);
@@ -59,8 +59,6 @@ public class CreateTimetableDAO extends DAO {
 		pstmt2.setString(1, visitor_account.getUsername());
 		
 		ResultSet rs2 = pstmt2.executeQuery();
-		
-		//ArrayList<BandBean> times = new ArrayList<>();
 		
 		while (rs2.next()) {
 				BandBean bandbean = new BandBean();
@@ -76,22 +74,13 @@ public class CreateTimetableDAO extends DAO {
 			    
 			    bandbean.setName(rs2.getString("name"));
 			    
-			    //bands.add(bandbean); //fuer ausgabe relevant
-			    
 			    times.add(bandbean);
-
-			    // Testing
-			    //System.out.println(times.get(0).getName());
-			    //System.out.println(times.get(0).getTimeslot_date());
-			    //System.out.println(times.get(0).getTimeslot_start());
-			    //System.out.println(times.get(0).getTimeslot_end());
 			    			
 		}
 		
 		
 		rs2.close();
 		pstmt2.close();
-		connection.close();
 
 		
 	}
