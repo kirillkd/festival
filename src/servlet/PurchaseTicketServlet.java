@@ -56,6 +56,8 @@ public class PurchaseTicketServlet extends HttpServlet {
 			req.setAttribute("paymentMethodListBean", paymentMethodListBean);
 			
 			purchaseTicketDao.closeConnection();
+			
+			req.setAttribute("action", "purchase");
 						
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
@@ -85,33 +87,62 @@ public class PurchaseTicketServlet extends HttpServlet {
 		visitorBean.setAdddress(req.getParameter("inputAddress"));
 		visitorBean.setCountry(req.getParameter("inputCountry"));
 		
+		try {
+			visitorBean.setBirthdate(DateConverter.UserInputDateToJavaDate(req.getParameter("inputBirthdate")));
+		} catch (ParseException e) {
+			req.setAttribute("error", "Please enter your birthdate in a valid format!");
+		}
+		
 		TicketBean ticketBean = new TicketBean();
 		ticketBean.setPayment_method(req.getParameter("inputPayment_Method"));
 		
 		TicketPriceBean ticketPriceBean = new TicketPriceBean();
 		
+		GenericListBean<FestivalEventBean> festivalEventListBean = new GenericListBean<FestivalEventBean>();
+		GenericListBean<Pair<TicketTypeBean, TicketPriceBean>> ticketTypeListBean = new GenericListBean<>();
+		GenericListBean<String> sexListBean = new GenericListBean<>();
+		GenericListBean<String> paymentMethodListBean = new GenericListBean<>();
+		
+		
+		
 		try {
 			PurchaseTicketDAO purchaseTicketDao = new PurchaseTicketDAO();
 			
-			purchaseTicketDao.getFestivalEventInformation(festivalEventBean);
-			purchaseTicketDao.getTicketPriceInformation(ticketPriceBean, ticketTypeBean);
-						
-			visitorBean.setBirthdate(DateConverter.SQLDateToJavaDate(req.getParameter("inputBirthdate")));
+			purchaseTicketDao.getFestivalEvents(festivalEventListBean);
+			req.setAttribute("festivalEventListBean", festivalEventListBean);
 			
+			purchaseTicketDao.getTicketTypes(ticketTypeListBean);
+			req.setAttribute("ticketTypeListBean", ticketTypeListBean);
+			
+			purchaseTicketDao.getVisitorSexDropdownContent(sexListBean);
+			req.setAttribute("sexListBean", sexListBean);
+			
+			purchaseTicketDao.getTicketPaymentMethodDropdownContent(paymentMethodListBean);
+			req.setAttribute("paymentMethodListBean", paymentMethodListBean);
+						
 			req.setAttribute("festivalEventBean", festivalEventBean);
 			req.setAttribute("ticketTypeBean", ticketTypeBean);
 			req.setAttribute("visitorBean", visitorBean);
 			req.setAttribute("ticketBean", ticketBean);
 			req.setAttribute("ticketPriceBean", ticketPriceBean);
 			
+			purchaseTicketDao.validateInput(visitorBean, ticketBean);
+			
+			purchaseTicketDao.getFestivalEventInformation(festivalEventBean);
+			purchaseTicketDao.getTicketPriceInformation(ticketPriceBean, ticketTypeBean);
+				
+				
 			purchaseTicketDao.closeConnection();
 			
-		} catch (ClassNotFoundException | SQLException | ParseException e) {
+			req.setAttribute("action", "confirm");
+						
+		} catch (ClassNotFoundException | SQLException | IllegalArgumentException e) {
 			e.printStackTrace();
 			req.setAttribute("error", e.getMessage());
-		}	
-				
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/purchaseTicketConfirm.jsp");
-		dispatcher.forward(req, resp);		
+			req.setAttribute("action", "purchase");
+		}
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/purchaseTicket.jsp");
+		dispatcher.forward(req, resp);
 	}
 }
