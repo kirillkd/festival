@@ -58,6 +58,7 @@
 				</div>
 			</nav>
 			
+			<nav class="navbar navbar-default">
 			<div class="container">
 				
 				<form action="/festival/createTimetable" method="post">			
@@ -91,6 +92,32 @@
 					<% } %>
 				 </form>
 			</div>
+			</nav>
+			
+			<nav class="navbar navbar-default">
+			<div class="container">
+				
+				<form action="/festival/createTimetable" method="post">			
+					<input type="hidden" name="username" value="<%= request.getAttribute("username") %>" >
+					
+					<% if (((ArrayList) request.getAttribute("times")).size() > 0) { %>
+						
+						<input type="hidden" name="times" value="<%= ((ArrayList) request.getAttribute("times")).size()%>" >
+												
+						<% for(int i = 0; i < (((ArrayList) request.getAttribute("times")).size()) ; i++) { %>					
+							
+							<div class="form-group">
+							
+								<label><%= ((BandBean) (((ArrayList) request.getAttribute("times")).size()).get(i)).getName() %></label>		
+							
+							</div>
+						<% } %>
+						
+					<% } %>
+				 </form>
+			</div>
+			</nav>
+			
 		</div>			
 	</body>
 </html>

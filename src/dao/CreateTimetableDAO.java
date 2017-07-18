@@ -3,6 +3,9 @@ package dao;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 import beans.VisitorAccountBean;
@@ -19,7 +22,7 @@ public class CreateTimetableDAO extends DAO {
 	public void getPreferences(VisitorAccountBean visitor_account, ArrayList<TimetableEntryBean> timetable_entry,
 			ArrayList<BandBean> bands) throws RuntimeException, SQLException,
 			ClassNotFoundException {
-
+		
 		String query1 = "UPDATE timetable_entry AS te SET preference = ? FROM band b, provider p WHERE te.username = ? AND p.name = ? AND b.band_id = te.band_id AND p.provider_id = b.provider_id;";
 		
 		PreparedStatement pstmt1 = connection.prepareStatement(query1);
@@ -41,14 +44,13 @@ public class CreateTimetableDAO extends DAO {
 					
 		pstmt1.close();
 		connection.close();
-
-		
-	}
 	
-	public void getCreateTimetable(VisitorAccountBean visitor_account, ArrayList<TimetableEntryBean> timetable_entry,
-			ArrayList<BandBean> bands) throws RuntimeException, SQLException,
-			ClassNotFoundException {
+	}
 
+	
+	public void getCreateTimetable(VisitorAccountBean visitor_account, ArrayList<BandBean> times) throws RuntimeException, SQLException,
+			ClassNotFoundException {
+		
 		String query2 = "SELECT b.timeslot_date, b.timeslot_start, b.timeslot_end, p.name FROM band b, provider p, timetable_entry te WHERE b.provider_id = p.provider_id  AND te.username=? AND te.band_id = b.band_id;";
 
 		
@@ -58,13 +60,32 @@ public class CreateTimetableDAO extends DAO {
 		
 		ResultSet rs2 = pstmt2.executeQuery();
 		
+		//ArrayList<BandBean> times = new ArrayList<>();
+		
 		while (rs2.next()) {
 				BandBean bandbean = new BandBean();
-				bandbean.setTimeslot_date(rs2.getDate("timeslot_date"));
-				bandbean.setTimeslot_start(rs2.getDate("timeslot_start"));
-				bandbean.setTimeslot_end(rs2.getDate("timeslot_end"));
-				bandbean.setName(rs2.getString("name"));
-				bands.add(bandbean);
+			    
+			    LocalDate timeslot_date = rs2.getDate("timeslot_date").toLocalDate();
+			    bandbean.setTimeslot_date(timeslot_date);
+			        
+			    LocalTime timeslot_start = rs2.getTime("timeslot_start").toLocalTime();
+			    bandbean.setTimeslot_start(timeslot_start);		    
+			    
+			    LocalTime timeslot_end = rs2.getTime("timeslot_end").toLocalTime();
+			    bandbean.setTimeslot_end(timeslot_end);	
+			    
+			    bandbean.setName(rs2.getString("name"));
+			    
+			    //bands.add(bandbean); //fuer ausgabe relevant
+			    
+			    times.add(bandbean);
+
+			    // Testing
+			    //System.out.println(times.get(0).getName());
+			    //System.out.println(times.get(0).getTimeslot_date());
+			    //System.out.println(times.get(0).getTimeslot_start());
+			    //System.out.println(times.get(0).getTimeslot_end());
+			    			
 		}
 		
 		
