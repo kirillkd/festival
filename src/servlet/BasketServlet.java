@@ -15,16 +15,16 @@ import dao.ShopDAO;
 import beans.ProductBean;
 import beans.WristbandBean;
 /**
- * Servlet implementation class ConfirmPurchaseServlet
+ * Servlet implementation class BasketServlet
  */
-@WebServlet("/ConfirmPurchaseServlet")
-public class ConfirmPurchaseServlet extends HttpServlet {
+@WebServlet("/BasketServlet")
+public class BasketServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ConfirmPurchaseServlet() {
+    public BasketServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,15 +35,37 @@ public class ConfirmPurchaseServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			int v_id = Integer.parseInt(request.getParameter("usr"));
+			// get the visitor id input and validate it (it should be an integer)
+			int v_id = 0;
+			try { 
+				v_id = Integer.parseInt(request.getParameter("usr"));
+			}
+			catch (Exception e){
+				request.setAttribute("errorMsg", "Visitor ID should be an integer");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+				dispatcher.forward(request, response);
+			}
 			
+			// retrieve the UUID and then the productsBean itself
+			// this is to display the selected items
 			String productsBeanID = request.getParameter("beanId");
 			ProductBean productsBean = (ProductBean) request.getSession().getAttribute(productsBeanID);
-			//System.out.println(productsBean.getProductsList().get(1).getPrice());
 			
+			// get the quantities (including zeroes)
 			ArrayList<Integer> quantities = new ArrayList<Integer>();
 			for (int i=0; i < request.getParameterValues("quantity").length; i++) {
 				quantities.add(Integer.parseInt(request.getParameterValues("quantity")[i]));
+			}
+			
+			// if no items  were selected (i.e. all quantities=0), display error page
+			int nSelectedItems = 0;
+			for (int i = 0; i < quantities.size(); i++) {
+				if (quantities.get(i) != 0) { nSelectedItems++; }
+			}
+			if (nSelectedItems == 0) {
+				request.setAttribute("errorMsg", "No items were selected");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+				dispatcher.forward(request, response);
 			}
 			
 			ShopDAO dao = new ShopDAO();
@@ -55,31 +77,32 @@ public class ConfirmPurchaseServlet extends HttpServlet {
 			
 			dao.computeOrderPrice(productsBean, quantities);
 			
+			// UUID to pass the wristband bean to the next servlet (UpdateBalanceServlet)
 			String wristbandId = UUID.randomUUID().toString();
-			//System.out.println("confirm  purchase servlet " + wristbandId);
-			
+			// UUID to pass the amount to the next servlet (UpdateBalanceServlet)
 			String amountID = UUID.randomUUID().toString();
+			// pass the wristband bean and the amount to the next servlet
 			request.getSession().setAttribute(wristbandId, wb);
 			request.getSession().setAttribute(amountID, productsBean.getSelectedProductsPrice());
 			
+			// pass the UUIDs for the servlet to retrieve the bean and amount
 			request.setAttribute("wristbandId", wristbandId);
 			request.setAttribute("amountID", amountID);
 			
-			//System.out.println("confirm purchase wbid " + wb.getWristband_id());
-			
+			// if balance of wristband is enough, show the selected products to user
 			if (wb.getBalance() >= productsBean.getSelectedProductsPrice()) {
-				//dao.alterWristbandBalance(wb, productsBean.getSelectedProductsPrice());
+
 				request.setAttribute("productsBean", productsBean);
 				request.setAttribute("quantities", quantities);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/confirmPurchase.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/basket.jsp");
+				dispatcher.forward(request, response);
+				
+			}
+			else { // otherwise display error message
+				request.setAttribute("errorMsg", "Not enough balance, top up wristband");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
 				dispatcher.forward(request, response);
 			}
-			else {
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/noBalance.jsp");
-				dispatcher.forward(request, response);
-			}
-			//System.out.println(productsBean.getSelectedProductsPrice());
-			//System.out.println(quantities.toString());
 			
 		} catch (Throwable e) {
     		e.printStackTrace();

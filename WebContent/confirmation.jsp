@@ -5,19 +5,21 @@
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>		
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Not enough balance</title>
+	<title>Confirmation</title>
 </head>
 <body>
 	<%@include file="header.html" %>
+	
 	<div class="container">
 		<div class="container">
-  			<div class="well">You do not have enough balance on your wristband.
-  			 Try selecting other items or top up your wristband.</div>
+			<h3>Payment was successful</h3>
+  			<div class="well">Balance left: <%= request.getAttribute("newBalance") %></div>
 		</div>
 	
-		<a href="/festival/shops"><button type = "submit" class = "btn btn-info">Go back</button></a>
+		<a href="/festival/shops"><button type = "submit" class = "btn btn-success">Go back</button></a>
 	</div>
+
 </body>
 </html>

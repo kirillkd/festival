@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.ProductBean;
 import beans.WristbandBean;
 import dao.ShopDAO;
 /**
@@ -34,19 +33,25 @@ public class UpdateBalanceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub	
 		try {
+			// get the UUID to retrieve the wristband bean
 			String wbID = request.getParameter("wbID");
-			//System.out.println("update balance servlet " + wbID);
+			
+			// retrieve the wristband bean
 			WristbandBean wb = (WristbandBean) request.getSession().getAttribute(wbID);
-			System.out.println("update balance servlet " + wb.getBalance());
+			
 			ShopDAO dao = new ShopDAO();
 			
+			// get the total price of the selected items
 			String amountID = request.getParameter("amountID");
 			double amount = (double) request.getSession().getAttribute(amountID);
-			System.out.println("update balance amount: " + amount);
+			
+			// perform the payment transaction
 			dao.alterWristbandBalance(wb, amount);
-			/*
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/showProducts.jsp");
-			dispatcher.forward(request, response);*/
+			
+			// inform the user of success and the balance left
+			request.setAttribute("newBalance", wb.getBalance());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/confirmation.jsp");
+			dispatcher.forward(request, response);
 			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
