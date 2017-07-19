@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 import beans.ProductBean;
-import beans.ShopBean;
 import dao.ShopDAO;
 
 /**
@@ -34,17 +33,23 @@ public class ProductsServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int shopId = Integer.parseInt(request.getParameter("shopid"));
+		
+		// Populate the productBean with all the products of the chosen shop
 		try {
+			
+			int shopId = Integer.parseInt(request.getParameter("shopid"));
         	ShopDAO dao = new ShopDAO();
         	ProductBean product = new ProductBean();
         	dao.getShopProducts(product, shopId);
         	
+        	// unique identifier for transferring the product bean to the next servlet
         	String productsBeanId = UUID.randomUUID().toString();
-        	//System.out.println("id from products servlet:" + productsBeanId);
+        	// set the session attribute for the next servlet
         	request.getSession().setAttribute(productsBeanId, product);
 			
+        	// the UUID needs to be given to the next servlet for the product bean to be retrieved
         	request.setAttribute("productsBeanId", productsBeanId);
+        	// pass the productBean to the jsp
         	request.setAttribute("productsBean", product);
 
     	} catch (Throwable e) {

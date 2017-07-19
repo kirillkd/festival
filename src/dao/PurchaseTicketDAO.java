@@ -112,6 +112,31 @@ public class PurchaseTicketDAO extends DAO {
 		statement.close();
 	}
 
+	
+	public void validateInput(VisitorBean visitorBean, TicketBean ticketBean) {
+		if (visitorBean.getFirst_name() == null || visitorBean.getFirst_name().trim().equals("")) {
+			throw new IllegalArgumentException("Please enter your first name!");
+		}
+		if (visitorBean.getLast_name() == null || visitorBean.getLast_name().trim().equals("")) {
+			throw new IllegalArgumentException("Please enter your last name!");
+		}
+		if (visitorBean.getEmail() == null || visitorBean.getEmail().trim().equals("")) {
+			throw new IllegalArgumentException("Please enter your E-Mail Address!");
+		}
+		if (!visitorBean.getEmail().contains("@")) {
+			throw new IllegalArgumentException("Please enter a valid E-Mail Address!");
+		}
+		if (visitorBean.getAddress() == null || visitorBean.getAddress().trim().equals("")) {
+			throw new IllegalArgumentException("Please enter your address!");
+		}
+		if (visitorBean.getCountry() == null || visitorBean.getCountry().trim().equals("")) {
+			throw new IllegalArgumentException("Please enter your country!");
+		}
+		if (ticketBean.getPayment_method() == null || ticketBean.getPayment_method().trim().equals("")) {
+			throw new IllegalArgumentException("Please select a valid payment method!");
+		}
+	}
+	
 
 	public void getFestivalEventInformation(FestivalEventBean festivalEventBean) throws SQLException {
 		String query = "select name from festival_event where festival_event_id = ?;";
@@ -154,7 +179,7 @@ public class PurchaseTicketDAO extends DAO {
 		resultSet.close();
 		preparedStatement.close();
 	}
-
+	
 
 	public void createDatabaseEntries(FestivalEventBean festivalEventBean,
 			TicketTypeBean ticketTypeBean, VisitorBean visitorBean,

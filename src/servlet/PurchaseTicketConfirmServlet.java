@@ -3,7 +3,6 @@ package servlet;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.ParseException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import utils.DateConverter;
 
 import beans.FestivalEventBean;
 import beans.TicketBean;
@@ -37,13 +34,13 @@ public class PurchaseTicketConfirmServlet extends HttpServlet {
 		ticketTypeBean.setTicket_type_id(Integer.parseInt(req.getParameter("inputTicket_Type")));
 		
 		VisitorBean visitorBean = new VisitorBean();
-		visitorBean.setFirst_name(req.getParameter("inputFirst_Name"));
-		visitorBean.setLast_name(req.getParameter("inputLast_Name"));
-		visitorBean.setEmail(req.getParameter("inputEmail"));
-		visitorBean.setPhone(req.getParameter("inputPhone"));
-		visitorBean.setSex(req.getParameter("inputSex"));
-		visitorBean.setAdddress(req.getParameter("inputAddress"));
-		visitorBean.setCountry(req.getParameter("inputCountry"));
+		visitorBean.setFirst_name(req.getParameter("inputFirst_Name").trim());
+		visitorBean.setLast_name(req.getParameter("inputLast_Name").trim());
+		visitorBean.setEmail(req.getParameter("inputEmail").trim());
+		visitorBean.setPhone(req.getParameter("inputPhone").trim());
+		visitorBean.setSex(req.getParameter("inputSex").trim());
+		visitorBean.setAdddress(req.getParameter("inputAddress").trim());
+		visitorBean.setCountry(req.getParameter("inputCountry").trim());
 		
 		TicketBean ticketBean = new TicketBean();
 		ticketBean.setPayment_method(req.getParameter("inputPayment_Method"));

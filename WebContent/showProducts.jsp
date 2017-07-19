@@ -18,54 +18,50 @@
 		
 		<div class="container">
 			
-			<form action="/festival/ConfirmPurchaseServlet">
+			<form action="/festival/BasketServlet">
 
-			<input type="hidden" name="beanId" value="${productsBeanId}" />
+				<input type="hidden" name="beanId" value="${productsBeanId}" />
 			
-			<div class="form-group">
-  				<label for="usr">Visitor Id:</label>
-  				<input type="text" class="form-control" id="usr" name="usr">
-			</div>
+				<div class="form-group">
+  					<label for="usr">Visitor Id:</label>
+  					<input type="text" class="form-control" id="usr" name="usr">
+				</div>
   			
-  			<table class="table table-hover">
-    			<thead>
-      				<tr>
-      					<th>Product Name</th>
-        				<th>Price</th>
-        				<th>Type</th>
-						<th>Category</th>
-						<th>Quantity</th>
-      				</tr>
-    			</thead>
-    			<tbody>
-    			<%
-     		 	for(int i = 0; i < productsBean.getProductsList().size(); i++){%>
-					<tr>
-    					<td><%= productsBean.getProductsList().get(i).getName() %></td>
-    					<td><%= productsBean.getProductsList().get(i).getPrice() %></td>
-    					<td><%= productsBean.getProductsList().get(i).getType() %></td>
-    					<td><%= productsBean.getProductsList().get(i).getCategory() %></td>
-    					<td>
-    						<select id="qty" name="quantity" style="width: 50px;">
-    						<option value="0" selected>0</option>
-    						<option value="1">1</option>
-    						<option value="2">2</option>
-    						<option value="3">3</option>
-    						<option value="4">4</option>
-    						<option value="5">5</option>
-  							</select>
-    					</td>   
-  					</tr>  
- 				<% } %>  
+  				<table class="table table-hover">
+    				<thead>
+      					<tr>
+      						<th>Product Name</th>
+        					<th>Price</th>
+        					<th>Type</th>
+							<th>Category</th>
+							<th>Quantity</th>
+      					</tr>
+    				</thead>
+    				<tbody>
+    					<%
+     		 			for(int i = 0; i < productsBean.getProductsList().size(); i++){%>
+							<tr>
+    							<td><%= productsBean.getProductsList().get(i).getName() %></td>
+    							<td><%= productsBean.getProductsList().get(i).getPrice() %></td>
+    							<td><%= productsBean.getProductsList().get(i).getType() %></td>
+    							<td><%= productsBean.getProductsList().get(i).getCategory() %></td>
+    							<td>
+    								<select id="qty" name="quantity" style="width: 50px;">
+    								<option value="0" selected>0</option>
+    								<option value="1">1</option>
+    								<option value="2">2</option>
+    								<option value="3">3</option>
+    								<option value="4">4</option>
+    								<option value="5">5</option>
+  									</select>
+    							</td>   
+  							</tr>  
+ 						<% } %>  
       
-    			</tbody>
-    		</table>
+    				</tbody>
+    			</table>
     
-    		<!-- <a href="./ConfirmPurchaseServlet">
-        		<button type="button" class="btn btn-info">Proceed</button>
-    		</a>-->
-    		
-    		<button type="submit" class="btn btn-primary btn-lg">Proceed</button>
+    			<button type="submit" class="btn btn-primary btn-lg">Proceed</button>
     		
     		</form>
 		</div>

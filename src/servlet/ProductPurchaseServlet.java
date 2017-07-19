@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.ProductBean;
 import beans.ShopBean;
 import dao.ShopDAO;
 
@@ -33,6 +32,7 @@ public class ProductPurchaseServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//populate the ShopBean with all existing shops
 		try {
         	ShopDAO dao = new ShopDAO();
         	ShopBean shop = new ShopBean();

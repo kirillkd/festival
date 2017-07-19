@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.util.LinkedList, beans.VendorBean, beans.ShopBean" %>
+<%@ page import="java.util.LinkedList, java.util.Optional, beans.VendorBean, beans.ShopBean" %>
 
 
+<jsp:useBean id="productBean" scope="request" class="beans.ProductBean"></jsp:useBean>
 <jsp:useBean id="vendorBean" scope="request" class="beans.VendorBean"></jsp:useBean>
 <jsp:useBean id="vendorListBean" scope="request" class="beans.GenericListBean"></jsp:useBean>
 <jsp:useBean id="shopListBean" scope="request" class="beans.GenericListBean"></jsp:useBean>
@@ -36,7 +37,8 @@
 					<%= request.getAttribute("error") %>
 				</div>
 				
-			<% } else if ((LinkedList) vendorListBean.getItems() != null) { %>
+			<% } %> 
+			<% if ((LinkedList) vendorListBean.getItems() != null) { %>
 			
 				<b>Please select a vendor:</b><br>
 				<% for (int i=0; i<vendorListBean.getItems().size(); i++) { %>
@@ -51,15 +53,15 @@
 					<input type="hidden" name="inputVendorId" value="<%= vendorBean.getVendor_id() %>">
 					<div class="form-group">
 						<label for="inputProductName">Product Name</label>
-						<input type="text" required class="form-control" id="inputProductName" name="inputProductName" placeholder="Product Name">
+						<input type="text" required class="form-control" id="inputProductName" name="inputProductName" placeholder="Product Name" value="<%= Optional.ofNullable(productBean.getName()).orElse("") %>">
 					</div>
 					<div class="form-group">
 						<label for="inputProductPrice">Product Price</label>
-						<input type="number" required step="0.01" min="0" class="form-control" id="inputProductPrice" name="inputProductPrice">
+						<input type="number" required step="0.01" min="0" class="form-control" id="inputProductPrice" name="inputProductPrice" value="<%= Optional.ofNullable(productBean.getPrice()) %>">
 					</div>
 					<div class="form-group">
 						<label for="inputProductType">Product Type</label>
-						<input type="text" required class="form-control" id="inputProductType" name="inputProductType" placeholder="Product Type">
+						<input type="text" required class="form-control" id="inputProductType" name="inputProductType" placeholder="Product Type" value="<%= Optional.ofNullable(productBean.getType()).orElse("") %>">
 					</div>
 					<div class="form-group">
 						<label for="inputProductCategory">Product Category</label>
@@ -71,7 +73,7 @@
 					</div>
 					<div class="form-group">
 						<label for="inputSoldIn">Shops to be sold in</label>
-						<select class="form-control" id="inputSoldIn" name="inputSoldIn" multiple="multiple">
+						<select required class="form-control" id="inputSoldIn" name="inputSoldIn" multiple="multiple">
 							<% for (int i=0; i<shopListBean.getItems().size(); i++) { %>
 								<option value="<%= ((ShopBean) shopListBean.getItems().get(i)).getShop_id() %>"><%= ((ShopBean) shopListBean.getItems().get(i)).getName() %></option>
 							<% } %>
