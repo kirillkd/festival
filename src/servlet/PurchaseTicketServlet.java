@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -88,8 +87,8 @@ public class PurchaseTicketServlet extends HttpServlet {
 		visitorBean.setCountry(req.getParameter("inputCountry"));
 		
 		try {
-			visitorBean.setBirthdate(DateConverter.UserInputDateToJavaDate(req.getParameter("inputBirthdate")));
-		} catch (ParseException e) {
+			visitorBean.setBirthdate(DateConverter.UserInputDateToSQLDate(req.getParameter("inputBirthdate")));
+		} catch (IllegalArgumentException e) {
 			req.setAttribute("error", "Please enter your birthdate in a valid format!");
 		}
 		
