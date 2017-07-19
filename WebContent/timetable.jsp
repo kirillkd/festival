@@ -28,18 +28,7 @@
 				</div>
 			<% } %>
 		
-			<div class="container-fluid">
-			
-				<form class="form-inline" action="/festival/checkUsername" method="post">
-					<label>Please enter username and password:</label>
-					<input type="text" required class="form-control" placeholder="username" id="username" name="username">
-					<input type="password" required class="form-control" placeholder="password" id="password_id" name="password">
-					<button type="submit" class="btn btn-primary navbar-btn">Login</button>	
-				</form>
-			
-			</div>
-			
-			
+						
 			<% if (((ArrayList) request.getAttribute("bands")).size() > 0) { %>
 				<div class="container">
 					
@@ -109,9 +98,6 @@
 					
 					<h3>Enjoy your festival!</h3>
 					
-					<form action="index.jsp">
-    					<input type="submit" class="btn btn-danger navbar-btn pull" value="Logout" />
-					</form>
 					
 				</div>
 				
@@ -119,7 +105,9 @@
 			
 		</div>
 	
-	
+		<form action="index.jsp">
+    			<input type="submit" class="btn btn-danger navbar-btn pull" value="Logout" />
+		</form>
 					
 	</body>
 </html>
