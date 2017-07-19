@@ -24,7 +24,7 @@
 			
 				<div class="form-group">
   					<label for="usr">Visitor Id:</label>
-  					<input type="text" class="form-control" id="usr" name="usr">
+  					<input required type="text" class="form-control" id="usr" name="usr">
 				</div>
   			
   				<table class="table table-hover">
