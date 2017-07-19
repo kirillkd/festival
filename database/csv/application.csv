@@ -13,3 +13,6 @@
 13;band;Apply here for a timeslot;17-02-05 11:15:00;accepted;3
 14;band;Last chance for your application;17-02-05 12:15:00;pending;4
 15;band;Last chance for your application;17-02-05 13:15:00;accepted;5
+16;vendor;Last chance for your application;17-02-06 07:15:00;accepted;1
+17;vendor;Last chance for your application;17-02-06 07:35:00;pending;2
+18;vendor;Last chance for your application;17-02-06 07:55:00;accepted;3
