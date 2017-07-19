@@ -102,12 +102,14 @@
 				</div>
 				
 			<% } %>
+		
+		<form action="index.jsp">
+    			<input type="submit" class="btn btn-danger navbar-btn pull-right" value="Logout" />
+		</form>
 			
 		</div>
 	
-		<form action="index.jsp">
-    			<input type="submit" class="btn btn-danger navbar-btn pull" value="Logout" />
-		</form>
+		
 					
 	</body>
 </html>
