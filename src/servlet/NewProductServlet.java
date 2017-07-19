@@ -90,9 +90,11 @@ public class NewProductServlet extends HttpServlet {
 		productBean.setType(req.getParameter("inputProductType"));
 		productBean.setCategory(product_category.valueOf(req.getParameter("inputProductCategory")));
 		
-		GenericListBean<ShopBean> shopListBean = new GenericListBean<>();
+		req.setAttribute("productBean", productBean);
 		
-		shopListBean.setItems(new LinkedList<ShopBean>());
+		GenericListBean<ShopBean> selectedShopListBean = new GenericListBean<>();
+		
+		selectedShopListBean.setItems(new LinkedList<ShopBean>());
 		
 		String[] selectedShops = req.getParameterValues("inputSoldIn");
 		
@@ -101,24 +103,38 @@ public class NewProductServlet extends HttpServlet {
 			
 			shop.setShop_id(Integer.parseInt(selectedShops[i]));
 			
-			shopListBean.getItems().add(shop);
+			selectedShopListBean.getItems().add(shop);
 		}
+
+		GenericListBean<ShopBean> shopListBean = new GenericListBean<>();
+		GenericListBean<String> categoryListBean = new GenericListBean<>();
 		
 		try {
 			NewProductDAO newProductDao = new NewProductDAO();
 			
-			newProductDao.createDatabaseEntries(vendorBean, productBean, shopListBean);
+			newProductDao.getVendorShops(shopListBean, Integer.parseInt(req.getParameter("inputVendorId")));
+			req.setAttribute("shopListBean", shopListBean);
+			
+			newProductDao.getProductCategoryDropdownContent(categoryListBean);
+			req.setAttribute("categoryListBean", categoryListBean);
+			
+			newProductDao.validateInput(productBean);
+			
+			newProductDao.createDatabaseEntries(vendorBean, productBean, selectedShopListBean);
 			
 			newProductDao.closeConnection();
 			
-			req.setAttribute("success", "A new product was successfully created!");
+			req.setAttribute("success", "A new product was successfully created!");		
+
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
+			dispatcher.forward(req, resp);
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (ClassNotFoundException | SQLException | IllegalArgumentException e) {
 			req.setAttribute("error", e.getMessage());
 			e.printStackTrace();
-		}		
-
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
-		dispatcher.forward(req, resp);
+			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/newProduct.jsp");
+			dispatcher.forward(req, resp);
+		}
 	}	
 }
