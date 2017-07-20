@@ -10,15 +10,8 @@ import beans.SQLResultBean;
 
 public class SQLQueryDao extends DAO {
 	
-	private String query;
-
-	public SQLQueryDao(String query) throws ClassNotFoundException, SQLException {
-		this.query = query;
-	}
-	
-	public void executeQuery(SQLResultBean sqlResultBean) 
+	public void executeQuery(String query, SQLResultBean sqlResultBean) 
 			throws ClassNotFoundException, SQLException {
-		getConnection();
 		
 		connection.setReadOnly(true);
 		
@@ -51,7 +44,5 @@ public class SQLQueryDao extends DAO {
 		
 		rs.close();
 		stmt.close();
-		connection.close();
 	}
-	
 }

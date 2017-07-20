@@ -45,12 +45,12 @@ public class ResetDatabaseServlet extends HttpServlet {
 			} else {
 				req.setAttribute("success", "Database reset successful!");
 			}
-			
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
-			dispatcher.forward(req, resp);
 		} catch (InterruptedException e) {
-			req.setAttribute("error", e.toString() + " " + e.getMessage());
+			req.setAttribute("error", e.getMessage());
 			e.printStackTrace();
 		}
+
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
+		dispatcher.forward(req, resp);
 	}	
 }

@@ -3,18 +3,12 @@ package dao;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.*;
+import java.util.ArrayList;
 
 import beans.VisitorAccountBean;
 import beans.BandBean;
-import beans.TimetableEntryBean;
-import beans.ProviderBean;
 
 public class CheckUsernameDAO extends DAO {
-	
-	public CheckUsernameDAO() throws ClassNotFoundException, SQLException {
-		getConnection();
-	}
 
 	public void getCheckUsername(VisitorAccountBean visitor_account,
 			ArrayList<BandBean> bands) throws RuntimeException, SQLException,
@@ -23,7 +17,7 @@ public class CheckUsernameDAO extends DAO {
 		String query1 = "SELECT * FROM visitor_account WHERE username = ?;";
 		String query2 = "SELECT p.name FROM band b, timetable_entry te, provider p WHERE username = ? AND b.band_id = te.band_id AND p.provider_id = b.provider_id ORDER BY te.preference DESC;";
 		String query3 = "SELECT * FROM visitor_account WHERE username = ? AND password = ?;";
-		
+
 		PreparedStatement pstmt1 = connection.prepareStatement(query1);
 		PreparedStatement pstmt2 = connection.prepareStatement(query2);
 		PreparedStatement pstmt3 = connection.prepareStatement(query3);
@@ -58,8 +52,6 @@ public class CheckUsernameDAO extends DAO {
 			pstmt1.close();
 			pstmt2.close();
 			pstmt3.close();
-			connection.close();
-
 		}
 	}
 }

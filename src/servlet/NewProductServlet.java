@@ -29,49 +29,44 @@ public class NewProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/newProduct.jsp");
+		NewProductDAO newProductDao = new NewProductDAO();
 		
-		if (req.getParameter("vendor_id") == null) {
-			try {
+		try {
+			newProductDao.getConnection();
+			
+			if (req.getParameter("vendor_id") == null) { 
 				GenericListBean<VendorBean> vendorListBean = new GenericListBean<>();
-				
-				NewProductDAO newProductDao = new NewProductDAO();
 				
 				newProductDao.getVendors(vendorListBean);
 				req.setAttribute("vendorListBean", vendorListBean);
-				
-				newProductDao.closeConnection();
-				
-			} catch (ClassNotFoundException | SQLException e) {
-				req.setAttribute("error", e.toString() + " " + e.getMessage());
-				e.printStackTrace();
-			}
-			
-		} else {
-			try {
+			} else {					
 				VendorBean vendorBean = new VendorBean();
+				
 				vendorBean.setVendor_id(Integer.parseInt(req.getParameter("vendor_id")));
 				req.setAttribute("vendorBean", vendorBean);
 				
 				GenericListBean<ShopBean> shopListBean = new GenericListBean<>();
 				GenericListBean<String> categoryListBean = new GenericListBean<>();
 				
-				NewProductDAO newProductDao = new NewProductDAO();
-
 				newProductDao.getVendorShops(shopListBean, Integer.parseInt(req.getParameter("vendor_id")));
 				req.setAttribute("shopListBean", shopListBean);
 				
 				newProductDao.getProductCategoryDropdownContent(categoryListBean);
 				req.setAttribute("categoryListBean", categoryListBean);
-				
+			}					
+		} catch (ClassNotFoundException | SQLException | NumberFormatException e) {
+			req.setAttribute("error", e.getMessage());
+			e.printStackTrace();
+		} finally {
+			try {
 				newProductDao.closeConnection();
-				
-			} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
+			} catch (SQLException e) {
 				req.setAttribute("error", e.getMessage());
 				e.printStackTrace();
 			}
-		}
-		
+		}		
+
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/newProduct.jsp");
 		dispatcher.forward(req, resp);
 	}
 
@@ -109,8 +104,10 @@ public class NewProductServlet extends HttpServlet {
 		GenericListBean<ShopBean> shopListBean = new GenericListBean<>();
 		GenericListBean<String> categoryListBean = new GenericListBean<>();
 		
+		NewProductDAO newProductDao = new NewProductDAO();
+		
 		try {
-			NewProductDAO newProductDao = new NewProductDAO();
+			newProductDao.getConnection();
 			
 			newProductDao.getVendorShops(shopListBean, Integer.parseInt(req.getParameter("inputVendorId")));
 			req.setAttribute("shopListBean", shopListBean);
@@ -121,8 +118,6 @@ public class NewProductServlet extends HttpServlet {
 			newProductDao.validateInput(productBean);
 			
 			newProductDao.createDatabaseEntries(vendorBean, productBean, selectedShopListBean);
-			
-			newProductDao.closeConnection();
 			
 			req.setAttribute("success", "A new product was successfully created!");		
 
@@ -135,6 +130,13 @@ public class NewProductServlet extends HttpServlet {
 			
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/newProduct.jsp");
 			dispatcher.forward(req, resp);
+		} finally {
+			try {
+				newProductDao.closeConnection();
+			} catch (SQLException e) {
+				req.setAttribute("error", e.getMessage());
+				e.printStackTrace();
+			}
 		}
-	}	
+	}
 }

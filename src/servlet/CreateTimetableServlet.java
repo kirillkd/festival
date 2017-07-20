@@ -1,11 +1,9 @@
 package servlet;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,49 +27,56 @@ public class CreateTimetableServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-				
+
+		CreateTimetableDAO createTimetableDao = new CreateTimetableDAO();
+
 		try {
-			CreateTimetableDAO dao = new CreateTimetableDAO();
-			
-	    	VisitorAccountBean visitor_account = new VisitorAccountBean();
-	    	ArrayList<BandBean> bands = new ArrayList<>();
-	    	ArrayList<TimetableEntryBean> timetable_entry = new ArrayList<>();
-	    	visitor_account.setUsername(req.getParameter("username"));
-	    	
-	    	for (int i=0; i<Integer.parseInt(req.getParameter("bands")); i++){
-	    		TimetableEntryBean timetable = new TimetableEntryBean();
-	    		BandBean band = new BandBean();
-	    		
-	    		timetable.setPreference(Integer.parseInt(req.getParameter(i+".preferences")));
-	    		
-	    		band.setName(req.getParameter(i+".band"));
-	    		
-	    		timetable_entry.add(timetable);
-	    		bands.add(band);
-	    	}
-	    	
-	    	dao.getPreferences(visitor_account, timetable_entry, bands);
-	    	
-	    	req.setAttribute("bands", bands);
-	    	req.setAttribute("username", req.getParameter("username"));
-	    	
-	    	ArrayList<BandBean> times = new ArrayList<>();
-	    	dao.getCreateTimetable(visitor_account, times);
-		    req.setAttribute("times", times);
-		    dao.closeConnection();
-		    
-		}
-		catch (SQLException | ClassNotFoundException | RuntimeException e) {
+			createTimetableDao.getConnection();
+
+			VisitorAccountBean visitor_account = new VisitorAccountBean();
+			ArrayList<BandBean> bands = new ArrayList<>();
+			ArrayList<TimetableEntryBean> timetable_entry = new ArrayList<>();
+			visitor_account.setUsername(req.getParameter("username"));
+
+			for (int i = 0; i < Integer.parseInt(req.getParameter("bands")); i++) {
+				TimetableEntryBean timetable = new TimetableEntryBean();
+				BandBean band = new BandBean();
+
+				timetable.setPreference(Integer.parseInt(req.getParameter(i	+ ".preferences")));
+
+				band.setName(req.getParameter(i + ".band"));
+
+				timetable_entry.add(timetable);
+				bands.add(band);
+			}
+
+			createTimetableDao.getPreferences(visitor_account, timetable_entry,	bands);
+
+			req.setAttribute("bands", bands);
+			req.setAttribute("username", req.getParameter("username"));
+
+			ArrayList<BandBean> times = new ArrayList<>();
+			createTimetableDao.getCreateTimetable(visitor_account, times);
+			req.setAttribute("times", times);
+		} catch (SQLException | ClassNotFoundException | RuntimeException e) {
 			req.setAttribute("error", e.getMessage());
+			e.printStackTrace();
+		} finally {
+			try {
+				createTimetableDao.closeConnection();
+			} catch (SQLException e) {
+				req.setAttribute("error", e.getMessage());
+				e.printStackTrace();
+			}
 		}
-		
+
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/timetable.jsp");
 		dispatcher.forward(req, resp);
 	}
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/timetable.jsp");
 		dispatcher.forward(request, response);
-}
-	
+	}
 }

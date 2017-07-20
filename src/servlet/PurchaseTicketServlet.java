@@ -37,10 +37,10 @@ public class PurchaseTicketServlet extends HttpServlet {
 		GenericListBean<String> sexListBean = new GenericListBean<>();
 		GenericListBean<String> paymentMethodListBean = new GenericListBean<>();
 		
-		PurchaseTicketDAO purchaseTicketDao;
+		PurchaseTicketDAO purchaseTicketDao = new PurchaseTicketDAO();
 		
 		try {
-			purchaseTicketDao = new PurchaseTicketDAO();
+			purchaseTicketDao.getConnection();
 						
 			purchaseTicketDao.getFestivalEvents(festivalEventListBean);
 			req.setAttribute("festivalEventListBean", festivalEventListBean);
@@ -53,15 +53,20 @@ public class PurchaseTicketServlet extends HttpServlet {
 			
 			purchaseTicketDao.getTicketPaymentMethodDropdownContent(paymentMethodListBean);
 			req.setAttribute("paymentMethodListBean", paymentMethodListBean);
-			
-			purchaseTicketDao.closeConnection();
-			
-			req.setAttribute("action", "purchase");
 						
+			req.setAttribute("action", "purchase");
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			req.setAttribute("error", e.getMessage());
-		}		
+		} finally {
+			try {
+				purchaseTicketDao.closeConnection();
+			} catch (SQLException e) {
+				req.setAttribute("error", e.getMessage());
+				e.printStackTrace();
+			}
+		}
 
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/purchaseTicket.jsp");
 		dispatcher.forward(req, resp);
@@ -102,8 +107,10 @@ public class PurchaseTicketServlet extends HttpServlet {
 		GenericListBean<String> sexListBean = new GenericListBean<>();
 		GenericListBean<String> paymentMethodListBean = new GenericListBean<>();
 		
+		PurchaseTicketDAO purchaseTicketDao = new PurchaseTicketDAO();
+		
 		try {
-			PurchaseTicketDAO purchaseTicketDao = new PurchaseTicketDAO();
+			purchaseTicketDao.getConnection();
 			
 			purchaseTicketDao.getFestivalEvents(festivalEventListBean);
 			req.setAttribute("festivalEventListBean", festivalEventListBean);
@@ -127,16 +134,20 @@ public class PurchaseTicketServlet extends HttpServlet {
 			
 			purchaseTicketDao.getFestivalEventInformation(festivalEventBean);
 			purchaseTicketDao.getTicketPriceInformation(ticketPriceBean, ticketTypeBean);
-			
-				
-			purchaseTicketDao.closeConnection();
-			
+						
 			req.setAttribute("action", "confirm");
 						
 		} catch (ClassNotFoundException | SQLException | IllegalArgumentException e) {
 			e.printStackTrace();
 			req.setAttribute("error", e.getMessage());
 			req.setAttribute("action", "purchase");
+		} finally {
+			try {
+				purchaseTicketDao.closeConnection();
+			} catch (SQLException e) {
+				req.setAttribute("error", e.getMessage());
+				e.printStackTrace();
+			}
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/purchaseTicket.jsp");

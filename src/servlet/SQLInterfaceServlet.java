@@ -34,15 +34,24 @@ public class SQLInterfaceServlet extends HttpServlet {
 		
 		req.setAttribute("inputQuery", req.getParameter("inputQuery"));
 		
+		SQLQueryDao sqlQueryDao = new SQLQueryDao();
+		
 		try {
-			SQLQueryDao sqlQueryDao = new SQLQueryDao(req.getParameter("inputQuery"));
+			sqlQueryDao.getConnection();
 			SQLResultBean sqlResultBean = new SQLResultBean();
 			
-			sqlQueryDao.executeQuery(sqlResultBean);
+			sqlQueryDao.executeQuery(req.getParameter("inputQuery"), sqlResultBean);
         	req.setAttribute("sqlResult", sqlResultBean);
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			req.setAttribute("error", e.getMessage());			
+			req.setAttribute("error", e.getMessage());		
+			e.printStackTrace();	
+		} finally {
+			try {
+				sqlQueryDao.closeConnection();
+			} catch (SQLException e) {
+				req.setAttribute("error", e.getMessage());
+				e.printStackTrace();
+			}
 		}
 
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/sqlInterface.jsp");

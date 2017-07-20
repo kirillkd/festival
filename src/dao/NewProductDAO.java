@@ -12,12 +12,7 @@ import beans.GenericListBean;
 import beans.VendorBean;
 
 public class NewProductDAO extends DAO {
-	
-	public NewProductDAO() throws ClassNotFoundException, SQLException {
-		getConnection();
-	}
-	
-	
+		
 	public void getVendors(GenericListBean<VendorBean> vendorListBean) throws SQLException {
 		String query = "select v.vendor_id, p.name " +
 				"from vendor v, sponsor s, provider p " +

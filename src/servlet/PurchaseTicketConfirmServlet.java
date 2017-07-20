@@ -44,22 +44,29 @@ public class PurchaseTicketConfirmServlet extends HttpServlet {
 		
 		TicketBean ticketBean = new TicketBean();
 		ticketBean.setPayment_method(req.getParameter("inputPayment_Method"));
-				
+		
+		PurchaseTicketDAO purchaseTicketDao = new PurchaseTicketDAO();
+		
 		try {
-			PurchaseTicketDAO purchaseTicketDao = new PurchaseTicketDAO();
-						
+			purchaseTicketDao.getConnection();
+			
 			visitorBean.setBirthdate(Date.valueOf(req.getParameter("inputBirthdate")));
 			
 			purchaseTicketDao.createDatabaseEntries(festivalEventBean, ticketTypeBean, visitorBean, ticketBean);
-			
-			purchaseTicketDao.closeConnection();
 			
 			req.setAttribute("success", "A new ticket was successfully purchased!");
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			req.setAttribute("error", e.getMessage());
-		}	
+		} finally {
+			try {
+				purchaseTicketDao.closeConnection();
+			} catch (SQLException e) {
+				req.setAttribute("error", e.getMessage());
+				e.printStackTrace();
+			}
+		}
 				
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
 		dispatcher.forward(req, resp);			

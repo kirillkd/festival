@@ -18,12 +18,6 @@ import beans.VisitorBean;
 
 public class PurchaseTicketDAO extends DAO {
 	
-	
-	public PurchaseTicketDAO() throws ClassNotFoundException, SQLException {
-		getConnection();
-	}
-	
-	
 	public void getFestivalEvents(GenericListBean<FestivalEventBean> festivalEventListBean) throws SQLException {
 		String query = "select festival_event_id, name from festival_event;";
 		
