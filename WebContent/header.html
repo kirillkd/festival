@@ -12,20 +12,27 @@
 		<div class="container-fluid">
 		
 			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
 				<a class="navbar-brand" href="index.jsp">Start page</a>
 			</div>
 							
-			<ul class="nav navbar-nav navbar-left">
-				<li><a href="purchase-ticket">Purchase Ticket</a></li>
-				<li><a href="timetable_login.jsp">Create Timetable</a></li>
-				<li><a href="new-product">New product</a></li>
-				<li><a href="shops">Purchase Item</a></li>
-				<li><a href="sql-interface">SQL Interface</a></li>
-			</ul>
+			<div class="collapse navbar-collapse" id="navbar">
+				<ul class="nav navbar-nav">
+					<li><a href="purchase-ticket">Purchase Ticket</a></li>
+					<li><a href="timetable_login.jsp">Create Timetable</a></li>
+					<li><a href="new-product">New product</a></li>
+					<li><a href="shops">Purchase Item</a></li>
+					<li><a href="sql-interface">SQL Interface</a></li>
+				</ul>
 			
-			<ul class="nav navbar-nav navbar-right navbar-collapse">
-				<li><button type="submit" class="btn btn-danger navbar-btn pull-right" data-toggle="modal" data-target="#resetDatabaseModal">Reset database</button></li>
-			</ul>										
+				<ul class="nav navbar-nav navbar-right">
+					<li><button type="submit" class="btn btn-danger navbar-btn pull-right" data-toggle="modal" data-target="#resetDatabaseModal">Reset database</button></li>
+				</ul>
+			</div>
 		</div>
 	</nav>
 	
