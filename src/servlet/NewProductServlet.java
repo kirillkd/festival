@@ -78,6 +78,8 @@ public class NewProductServlet extends HttpServlet {
 		
 		vendorBean.setVendor_id(Integer.parseInt(req.getParameter("inputVendorId")));
 		
+		req.setAttribute("vendorBean", vendorBean);
+		
 		ProductBean productBean = new ProductBean();
 		
 		productBean.setName(req.getParameter("inputProductName"));
@@ -100,6 +102,8 @@ public class NewProductServlet extends HttpServlet {
 			
 			selectedShopListBean.getItems().add(shop);
 		}
+		
+		req.setAttribute("selectedShops", selectedShops);
 
 		GenericListBean<ShopBean> shopListBean = new GenericListBean<>();
 		GenericListBean<String> categoryListBean = new GenericListBean<>();

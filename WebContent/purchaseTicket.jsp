@@ -48,7 +48,15 @@
 						<label for="inputFestival_Event">Festival Event</label>
 						<select class="form-control" id="inputFestival_Event" name="inputFestival_Event">
 							<% for(int i=0; i<festivalEventListBean.getItems().size(); i++) { %>
-								<option value="<%= ((FestivalEventBean) festivalEventListBean.getItems().get(i)).getFestival_event_id() %>"><%= ((FestivalEventBean) festivalEventListBean.getItems().get(i)).getName() %></option>
+								<option 
+								<%
+									if (((FestivalEventBean) festivalEventListBean.getItems().get(i)).getFestival_event_id() == festivalEventBean.getFestival_event_id()) {
+								%>
+								selected="selected" 
+								<%
+									}
+								%>
+								value="<%= ((FestivalEventBean) festivalEventListBean.getItems().get(i)).getFestival_event_id() %>"><%= ((FestivalEventBean) festivalEventListBean.getItems().get(i)).getName() %></option>
 							<% } %>
 						</select>
 					</div>
@@ -57,7 +65,15 @@
 						<label for="inputTicket_Type">Ticket Type</label>
 						<select class="form-control" id="inputTicket_Type" name="inputTicket_Type">
 							<% for(int i=0; i<ticketTypeListBean.getItems().size(); i++) { %>
-								<option value="<%= ((TicketTypeBean) ((Pair) ticketTypeListBean.getItems().get(i)).getLeft()).getTicket_type_id() %>"><%= ((TicketTypeBean) ((Pair) ticketTypeListBean.getItems().get(i)).getLeft()).getType() %> (<%= String.format("%.2f", ((TicketPriceBean) ((Pair) ticketTypeListBean.getItems().get(i)).getRight()).getPrice()) %> €) </option>
+								<option 
+								<%
+									if (((TicketTypeBean) ((Pair) ticketTypeListBean.getItems().get(i)).getLeft()).getTicket_type_id() == ticketTypeBean.getTicket_type_id()) {
+								%>
+								selected="selected"
+								<%
+									}
+								%>
+								value="<%= ((TicketTypeBean) ((Pair) ticketTypeListBean.getItems().get(i)).getLeft()).getTicket_type_id() %>"><%= ((TicketTypeBean) ((Pair) ticketTypeListBean.getItems().get(i)).getLeft()).getType() %> (<%= String.format("%.2f", ((TicketPriceBean) ((Pair) ticketTypeListBean.getItems().get(i)).getRight()).getPrice()) %> €) </option>
 							<% } %>
 						</select>
 					</div>
@@ -99,7 +115,15 @@
 						<label for="inputSex">Sex</label>
 						<select class="form-control" id="inputSex" name="inputSex">
 							<% for(int i=0; i<sexListBean.getItems().size(); i++) { %>
-								<option><%= sexListBean.getItems().get(i) %></option>
+								<option
+								<%
+									if (visitorBean.getSex() != null && visitorBean.getSex().equals(sexListBean.getItems().get(i))) {
+								%>
+								selected="selected"
+								<%
+									}
+								%>
+								><%= sexListBean.getItems().get(i) %></option>
 							<% } %>
 						</select>		
 					</div>				
@@ -118,7 +142,15 @@
 						<label for="inputPayment_Method">Payment Method</label>					
 						<select class="form-control" id="inputPayment_Method" name="inputPayment_Method">
 							<% for(int i=0; i<paymentMethodListBean.getItems().size(); i++) { %>
-								<option><%= paymentMethodListBean.getItems().get(i) %></option>
+								<option
+								<%
+									if (ticketBean.getPayment_method() != null && ticketBean.getPayment_method().equals(paymentMethodListBean.getItems().get(i))) {
+								%>
+								selected="selected"
+								<%
+									}
+								%>
+								><%= paymentMethodListBean.getItems().get(i) %></option>
 							<% } %>
 						</select>		
 					</div>

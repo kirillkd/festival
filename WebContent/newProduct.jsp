@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.util.LinkedList, java.util.Optional, beans.VendorBean, beans.ShopBean" %>
+<%@ page import="java.util.LinkedList, java.util.Optional, java.util.OptionalDouble, java.util.Arrays, beans.VendorBean, beans.ShopBean" %>
 
 
 <jsp:useBean id="productBean" scope="request" class="beans.ProductBean"></jsp:useBean>
@@ -58,7 +58,7 @@
 					</div>
 					<div class="form-group">
 						<label for="inputProductPrice">Product Price</label>
-						<input type="number" required step="0.01" min="0" class="form-control" id="inputProductPrice" name="inputProductPrice" value="<%= Optional.ofNullable(productBean.getPrice()) %>">
+						<input type="number" required step="0.01" min="0" class="form-control" id="inputProductPrice" name="inputProductPrice" value="<%= OptionalDouble.of(productBean.getPrice()).orElse(0.00) %>">
 					</div>
 					<div class="form-group">
 						<label for="inputProductType">Product Type</label>
@@ -68,16 +68,42 @@
 						<label for="inputProductCategory">Product Category</label>
 						<select class="form-control" id="inputProductCategory" name="inputProductCategory">
 							<% for (int i=0; i<categoryListBean.getItems().size(); i++) { %>
-								<option><%= categoryListBean.getItems().get(i) %></option>
+								<option 
+								<% 
+									if (productBean.getCategory() != null && productBean.getCategory().toString().equals(categoryListBean.getItems().get(i))) {
+								%>
+								selected="selected" 
+								<%
+									}
+								%>
+								><%= categoryListBean.getItems().get(i) %></option>
 							<% } %>
 						</select>
 					</div>
 					<div class="form-group">
 						<label for="inputSoldIn">Shops to be sold in</label>
 						<select required class="form-control" id="inputSoldIn" name="inputSoldIn" multiple="multiple">
-							<% for (int i=0; i<shopListBean.getItems().size(); i++) { %>
-								<option value="<%= ((ShopBean) shopListBean.getItems().get(i)).getShop_id() %>"><%= ((ShopBean) shopListBean.getItems().get(i)).getName() %></option>
-							<% } %>
+						<%
+							LinkedList<Integer> selectedShopsInt = new LinkedList();
+							if (request.getAttribute("selectedShops") != null)
+							{
+								String[] selectedShops = (String[]) request.getAttribute("selectedShops");
+								for (int i = 0; i < selectedShops.length; i++) {
+									selectedShopsInt.add(Integer.parseInt(selectedShops[i]));
+								}
+							}
+						%>
+						<% for (int i=0; i<shopListBean.getItems().size(); i++) { %>
+							<option
+							<%
+								if (selectedShopsInt.contains(((ShopBean) shopListBean.getItems().get(i)).getShop_id())) {
+							%>
+							selected="selected" 
+							<%
+								}
+							%>
+							value="<%= ((ShopBean) shopListBean.getItems().get(i)).getShop_id() %>"><%= ((ShopBean) shopListBean.getItems().get(i)).getName() %></option>
+						<% } %>
 						</select>
 					</div>
 					</br>
