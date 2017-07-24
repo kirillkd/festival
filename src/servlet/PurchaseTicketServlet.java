@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import utils.DateConverter.DateFormatException;
 import utils.Pair;
 import utils.DateConverter;
 
@@ -141,9 +140,6 @@ public class PurchaseTicketServlet extends HttpServlet {
 			e.printStackTrace();
 			req.setAttribute("error", e.getMessage());
 			req.setAttribute("action", "purchase");
-		} catch (DateFormatException e) {	
-			req.setAttribute("error", "Please enter your birthdate in a valid format!");
-			req.setAttribute("action", "purchase");		
 		} finally {
 			try {
 				purchaseTicketDao.closeConnection();
