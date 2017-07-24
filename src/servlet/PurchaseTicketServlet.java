@@ -136,8 +136,8 @@ public class PurchaseTicketServlet extends HttpServlet {
 			req.setAttribute("paymentMethodListBean", paymentMethodListBean);
 			
 			// Validate the input data
-			purchaseTicketDao.validateInput(visitorBean, ticketBean);
 			visitorBean.setBirthdate(DateConverter.UserInputDateToSQLDate(req.getParameter("inputBirthdate")));
+			purchaseTicketDao.validateInput(visitorBean, ticketBean);
 			
 			// Retrieve information about festival event and payment method again,
 			// since the request data contains only ids for them
