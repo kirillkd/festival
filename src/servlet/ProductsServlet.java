@@ -51,6 +51,8 @@ public class ProductsServlet extends HttpServlet {
         	request.setAttribute("productsBeanId", productsBeanId);
         	// pass the productBean to the jsp
         	request.setAttribute("productsBean", product);
+        	// pass the shopId to the jsp
+        	request.setAttribute("shopID", shopId);
 
     	} catch (Throwable e) {
     		e.printStackTrace();

@@ -8,7 +8,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>		
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>Insufficient balance</title>
+	<title>Purchase Error</title>
 </head>
 <body>
 	<%@include file="header.html" %>
@@ -18,7 +18,9 @@
   			<div class="well"><%= request.getAttribute("errorMsg") %></div>
 		</div>
 	
-		<a href="/festival/shops"><button type = "submit" class = "btn btn-info">Go back</button></a>
+		<!-- Redirects to the products page of the given shop, i.e. error.jsp not generic  -->
+		<a href="/festival/ProductsServlet?shopid=<%= request.getAttribute("shopID") %>"><button type = "submit"
+		   class = "btn btn-info">Go back</button></a>
 	</div>
 	
 </body>

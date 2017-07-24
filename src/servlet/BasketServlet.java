@@ -45,7 +45,8 @@ public class BasketServlet extends HttpServlet {
 			}
 			catch (Exception e){
 				request.setAttribute("errorMsg", "Visitor ID should be an integer");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+				request.setAttribute("shopID", request.getParameter("shopID"));
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/purchaseError.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
@@ -53,7 +54,8 @@ public class BasketServlet extends HttpServlet {
 			// check if the supplied visitor id exists
 			if (dao.isVisitorIDValid(v_id) == 0) {
 				request.setAttribute("errorMsg", "Visitor ID does not exist");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+				request.setAttribute("shopID", request.getParameter("shopID"));
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/purchaseError.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
@@ -76,7 +78,8 @@ public class BasketServlet extends HttpServlet {
 			}
 			if (nSelectedItems == 0) {
 				request.setAttribute("errorMsg", "No items were selected");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+				request.setAttribute("shopID", request.getParameter("shopID"));
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/purchaseError.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
@@ -112,7 +115,8 @@ public class BasketServlet extends HttpServlet {
 			}
 			else { // otherwise display error message
 				request.setAttribute("errorMsg", "Not enough balance. Top up your wristband!");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+				request.setAttribute("shopID", request.getParameter("shopID"));
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/purchaseError.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}

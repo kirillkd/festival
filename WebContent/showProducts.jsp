@@ -23,6 +23,8 @@
 
 				<input type="hidden" name="beanId" value="${productsBeanId}" />
 			
+				<input type="hidden" name="shopID" value="${shopID}" />
+			
 				<div class="form-group">
   					<label for="usr">Visitor Id:</label>
   					<input required type="text" class="form-control" id="usr" name="usr">
