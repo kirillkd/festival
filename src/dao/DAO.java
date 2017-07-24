@@ -8,6 +8,15 @@ public abstract class DAO {
 
 	protected Connection connection;
 
+	/** 
+	 * Establishes the connection to the PostgreSQL database. The parameters
+	 * can be changed in Config.java.
+	 * By default, auto-commit of the connection is disabled.
+	 *
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 * @see Config
+	 */
 	public void getConnection() throws SQLException, ClassNotFoundException {
 		Class.forName("org.postgresql.Driver");
 
@@ -21,6 +30,11 @@ public abstract class DAO {
 		this.connection = connection;
 	}
 
+	/**
+	 * Close the connection to the database.
+	 *
+	 * @throws SQLException
+	 */
 	public void closeConnection() throws SQLException {
 		connection.close();
 	}

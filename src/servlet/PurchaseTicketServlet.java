@@ -31,35 +31,39 @@ public class PurchaseTicketServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		GenericListBean<FestivalEventBean> festivalEventListBean = new GenericListBean<FestivalEventBean>();
-		GenericListBean<Pair<TicketTypeBean, TicketPriceBean>> ticketTypeListBean = new GenericListBean<>();
-		GenericListBean<String> sexListBean = new GenericListBean<>();
-		GenericListBean<String> paymentMethodListBean = new GenericListBean<>();
-		
+				
 		PurchaseTicketDAO purchaseTicketDao = new PurchaseTicketDAO();
 		
 		try {
 			purchaseTicketDao.getConnection();
-						
+			
+			// Get all festival events
+			GenericListBean<FestivalEventBean> festivalEventListBean = new GenericListBean<FestivalEventBean>();
 			purchaseTicketDao.getFestivalEvents(festivalEventListBean);
 			req.setAttribute("festivalEventListBean", festivalEventListBean);
 			
+			// Get ticket types with current price
+			GenericListBean<Pair<TicketTypeBean, TicketPriceBean>> ticketTypeListBean = new GenericListBean<>();
 			purchaseTicketDao.getTicketTypes(ticketTypeListBean);
 			req.setAttribute("ticketTypeListBean", ticketTypeListBean);
 			
+			// Get dropdown content for visitor's sex
+			GenericListBean<String> sexListBean = new GenericListBean<>();
 			purchaseTicketDao.getVisitorSexDropdownContent(sexListBean);
 			req.setAttribute("sexListBean", sexListBean);
 			
+			// Get dropdown content for ticket payment method
+			GenericListBean<String> paymentMethodListBean = new GenericListBean<>();
 			purchaseTicketDao.getTicketPaymentMethodDropdownContent(paymentMethodListBean);
 			req.setAttribute("paymentMethodListBean", paymentMethodListBean);
-						
+			
 			req.setAttribute("action", "purchase");
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			req.setAttribute("error", e.getMessage());
 		} finally {
+			// Make sure to close the database connection
 			try {
 				purchaseTicketDao.closeConnection();
 			} catch (SQLException e) {
@@ -75,13 +79,17 @@ public class PurchaseTicketServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-				
+		
+		// Create bean objects, fill them with request data
+		// and pass them again to the request
 		FestivalEventBean festivalEventBean = new FestivalEventBean();
 		festivalEventBean.setFestival_event_id(Integer.parseInt(req.getParameter("inputFestival_Event")));
+		req.setAttribute("festivalEventBean", festivalEventBean);
 		
 		TicketTypeBean ticketTypeBean = new TicketTypeBean();
 		ticketTypeBean.setTicket_type_id(Integer.parseInt(req.getParameter("inputTicket_Type")));
-		
+		req.setAttribute("ticketTypeBean", ticketTypeBean);
+
 		VisitorBean visitorBean = new VisitorBean();
 		visitorBean.setFirst_name(req.getParameter("inputFirst_Name"));
 		visitorBean.setLast_name(req.getParameter("inputLast_Name"));
@@ -90,50 +98,52 @@ public class PurchaseTicketServlet extends HttpServlet {
 		visitorBean.setSex(req.getParameter("inputSex"));
 		visitorBean.setAdddress(req.getParameter("inputAddress"));
 		visitorBean.setCountry(req.getParameter("inputCountry"));
-		
-		try {
-		} catch (IllegalArgumentException e) {
-		}
-		
+		req.setAttribute("visitorBean", visitorBean);
+
 		TicketBean ticketBean = new TicketBean();
 		ticketBean.setPayment_method(req.getParameter("inputPayment_Method"));
-		
+		req.setAttribute("ticketBean", ticketBean);
+
 		TicketPriceBean ticketPriceBean = new TicketPriceBean();
-		
-		GenericListBean<FestivalEventBean> festivalEventListBean = new GenericListBean<FestivalEventBean>();
-		GenericListBean<Pair<TicketTypeBean, TicketPriceBean>> ticketTypeListBean = new GenericListBean<>();
-		GenericListBean<String> sexListBean = new GenericListBean<>();
-		GenericListBean<String> paymentMethodListBean = new GenericListBean<>();
-		
+		req.setAttribute("ticketPriceBean", ticketPriceBean);
+
 		PurchaseTicketDAO purchaseTicketDao = new PurchaseTicketDAO();
 		
 		try {
 			purchaseTicketDao.getConnection();
 			
+			// We retrieve again all information which we already displayed the user, 
+			// but in case there is an error we need to show the data again
+			
+			// Get all festival events
+			GenericListBean<FestivalEventBean> festivalEventListBean = new GenericListBean<FestivalEventBean>();
 			purchaseTicketDao.getFestivalEvents(festivalEventListBean);
 			req.setAttribute("festivalEventListBean", festivalEventListBean);
 			
+			// Get ticket types with current price
+			GenericListBean<Pair<TicketTypeBean, TicketPriceBean>> ticketTypeListBean = new GenericListBean<>();
 			purchaseTicketDao.getTicketTypes(ticketTypeListBean);
 			req.setAttribute("ticketTypeListBean", ticketTypeListBean);
 			
+			// Get dropdown content for visitor's sex
+			GenericListBean<String> sexListBean = new GenericListBean<>();
 			purchaseTicketDao.getVisitorSexDropdownContent(sexListBean);
 			req.setAttribute("sexListBean", sexListBean);
 			
+			// Get dropdown content for ticket payment method
+			GenericListBean<String> paymentMethodListBean = new GenericListBean<>();
 			purchaseTicketDao.getTicketPaymentMethodDropdownContent(paymentMethodListBean);
 			req.setAttribute("paymentMethodListBean", paymentMethodListBean);
-						
-			req.setAttribute("festivalEventBean", festivalEventBean);
-			req.setAttribute("ticketTypeBean", ticketTypeBean);
-			req.setAttribute("visitorBean", visitorBean);
-			req.setAttribute("ticketBean", ticketBean);
-			req.setAttribute("ticketPriceBean", ticketPriceBean);
 			
+			// Validate the input data
 			purchaseTicketDao.validateInput(visitorBean, ticketBean);
 			visitorBean.setBirthdate(DateConverter.UserInputDateToSQLDate(req.getParameter("inputBirthdate")));
 			
+			// Retrieve information about festival event and payment method again,
+			// since the request data contains only ids for them
 			purchaseTicketDao.getFestivalEventInformation(festivalEventBean);
 			purchaseTicketDao.getTicketPriceInformation(ticketPriceBean, ticketTypeBean);
-									
+			
 			req.setAttribute("action", "confirm");
 						
 		} catch (ClassNotFoundException | SQLException | IllegalArgumentException e) {
@@ -141,6 +151,7 @@ public class PurchaseTicketServlet extends HttpServlet {
 			req.setAttribute("error", e.getMessage());
 			req.setAttribute("action", "purchase");
 		} finally {
+			// Make sure to close the database connection
 			try {
 				purchaseTicketDao.closeConnection();
 			} catch (SQLException e) {

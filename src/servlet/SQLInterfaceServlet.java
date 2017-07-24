@@ -40,12 +40,14 @@ public class SQLInterfaceServlet extends HttpServlet {
 			sqlQueryDao.getConnection();
 			SQLResultBean sqlResultBean = new SQLResultBean();
 			
+			// Pass query to the DAO and retrieve result
 			sqlQueryDao.executeQuery(req.getParameter("inputQuery"), sqlResultBean);
         	req.setAttribute("sqlResult", sqlResultBean);
 		} catch (ClassNotFoundException | SQLException e) {
 			req.setAttribute("error", e.getMessage());		
 			e.printStackTrace();	
 		} finally {
+			// Make sure to close the database connection
 			try {
 				sqlQueryDao.closeConnection();
 			} catch (SQLException e) {

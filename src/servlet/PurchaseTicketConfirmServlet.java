@@ -27,6 +27,7 @@ public class PurchaseTicketConfirmServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+		// Create bean objects and fill them with request data
 		FestivalEventBean festivalEventBean = new FestivalEventBean();
 		festivalEventBean.setFestival_event_id(Integer.parseInt(req.getParameter("inputFestival_Event")));
 		
@@ -52,6 +53,7 @@ public class PurchaseTicketConfirmServlet extends HttpServlet {
 			
 			visitorBean.setBirthdate(Date.valueOf(req.getParameter("inputBirthdate")));
 			
+			// Write all data to the database
 			purchaseTicketDao.createDatabaseEntries(festivalEventBean, ticketTypeBean, visitorBean, ticketBean);
 			
 			req.setAttribute("success", "A new ticket was successfully purchased!");
@@ -60,6 +62,7 @@ public class PurchaseTicketConfirmServlet extends HttpServlet {
 			e.printStackTrace();
 			req.setAttribute("error", e.getMessage());
 		} finally {
+			// Make sure to close the database connection 
 			try {
 				purchaseTicketDao.closeConnection();
 			} catch (SQLException e) {

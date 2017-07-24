@@ -25,9 +25,12 @@ public class ResetDatabaseServlet extends HttpServlet {
 		
 		ServletContext context = getServletContext();
 		String path = context.getRealPath("/database");
-				
+		
+		// Create a process which calls the python script for reseting the database
+		// The process needs to be executed in the directory containing the script
 		Process p = Runtime.getRuntime().exec("python3 database.py", null, new File(path));
 		
+		// Read the error output of the process
 		BufferedReader stdErrorReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 		
 		String error = "";
