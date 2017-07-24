@@ -8,21 +8,11 @@ import java.text.SimpleDateFormat;
 
 public class DateConverter {
 	
-	public static class DateFormatException extends Exception {
-
-		private static final long serialVersionUID = 1L;
-
-		public DateFormatException() {
-			super();
-		}
-		
-	}
-	
-	public static Date UserInputDateToSQLDate(String dateString) throws DateFormatException {
+	public static Date UserInputDateToSQLDate(String dateString) throws IllegalArgumentException {
 		try {
 			return Date.valueOf(dateString);
 		} catch (IllegalArgumentException e) {
-			throw new DateFormatException();
+			throw new IllegalArgumentException("Please enter your birthdate in a valid format!");
 		}
 	}
 		
