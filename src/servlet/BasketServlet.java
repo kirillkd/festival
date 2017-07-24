@@ -35,6 +35,9 @@ public class BasketServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
+			
+			ShopDAO dao = new ShopDAO();
+			
 			// get the visitor id input and validate it (it should be an integer)
 			int v_id = 0;
 			try { 
@@ -44,6 +47,15 @@ public class BasketServlet extends HttpServlet {
 				request.setAttribute("errorMsg", "Visitor ID should be an integer");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
 				dispatcher.forward(request, response);
+				return;
+			}
+			
+			// check if the supplied visitor id exists
+			if (dao.isVisitorIDValid(v_id) == 0) {
+				request.setAttribute("errorMsg", "Visitor ID does not exist");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+				dispatcher.forward(request, response);
+				return;
 			}
 			
 			// retrieve the UUID and then the productsBean itself
@@ -66,9 +78,9 @@ public class BasketServlet extends HttpServlet {
 				request.setAttribute("errorMsg", "No items were selected");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
 			
-			ShopDAO dao = new ShopDAO();
 			
 			WristbandBean wb = new WristbandBean();
 			wb.setV_id(v_id);
@@ -96,12 +108,13 @@ public class BasketServlet extends HttpServlet {
 				request.setAttribute("quantities", quantities);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/basket.jsp");
 				dispatcher.forward(request, response);
-				
+				return;
 			}
 			else { // otherwise display error message
-				request.setAttribute("errorMsg", "Not enough balance, top up wristband");
+				request.setAttribute("errorMsg", "Not enough balance. Top up your wristband!");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
 			
 		} catch (Throwable e) {

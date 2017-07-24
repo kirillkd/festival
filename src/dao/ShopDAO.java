@@ -116,7 +116,7 @@ public class ShopDAO extends DAO{
 		double newBalance = wb.getBalance() - amount;
 		wb.setBalance(newBalance);
 		
-		String changeBal = "UPDATE wristband SET balance=? WHERE visitor_id=" + wb.getV_id() + ";";
+		String changeBal = "UPDATE wristband SET balance=? WHERE visitor_id=" + wb.getV_id();
 		
 		PreparedStatement pstmt = connection.prepareStatement(changeBal);	
 		pstmt.setDouble(1, newBalance);
@@ -128,4 +128,19 @@ public class ShopDAO extends DAO{
 		closeConnection();
 	}
 
+	// check if the supplier visitor id exists
+	public int isVisitorIDValid (int v_id) throws SQLException, ClassNotFoundException {
+		
+		getConnection();
+		
+		String query = "SELECT count(*) FROM visitor WHERE visitor_id=" + v_id;
+		
+		PreparedStatement pstmt = connection.prepareStatement(query);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		rs.next();
+		
+		return rs.getInt(1);
+	}
 }
