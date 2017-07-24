@@ -32,10 +32,9 @@ public class CheckUsernameDAO extends DAO {
 		ResultSet rs3 = pstmt3.executeQuery();
 
 		if (rs1.next() == false) {
-			throw new RuntimeException("Username "
-					+ visitor_account.getUsername() + " does not exist!");
+			throw new RuntimeException("Invalid credentials!");
 		} else if (rs3.next() == false) {
-			throw new RuntimeException("Wrong Password!");
+			throw new RuntimeException("Invalid credentials!");
 		} else {
 			while (rs2.next()) {
 				BandBean bandbean = new BandBean();
