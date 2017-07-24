@@ -5,10 +5,25 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+
 public class DateConverter {
 	
-	public static Date UserInputDateToSQLDate(String dateString) throws IllegalArgumentException {		
-		return Date.valueOf(dateString);
+	public static class DateFormatException extends Exception {
+
+		private static final long serialVersionUID = 1L;
+
+		public DateFormatException() {
+			super();
+		}
+		
+	}
+	
+	public static Date UserInputDateToSQLDate(String dateString) throws DateFormatException {
+		try {
+			return Date.valueOf(dateString);
+		} catch (IllegalArgumentException e) {
+			throw new DateFormatException();
+		}
 	}
 		
 	
