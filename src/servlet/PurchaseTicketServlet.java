@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import utils.DateConverter.DateFormatException;
 import utils.Pair;
 import utils.DateConverter;
 
@@ -92,9 +93,7 @@ public class PurchaseTicketServlet extends HttpServlet {
 		visitorBean.setCountry(req.getParameter("inputCountry"));
 		
 		try {
-			visitorBean.setBirthdate(DateConverter.UserInputDateToSQLDate(req.getParameter("inputBirthdate")));
 		} catch (IllegalArgumentException e) {
-			req.setAttribute("error", "Please enter your birthdate in a valid format!");
 		}
 		
 		TicketBean ticketBean = new TicketBean();
@@ -131,16 +130,20 @@ public class PurchaseTicketServlet extends HttpServlet {
 			req.setAttribute("ticketPriceBean", ticketPriceBean);
 			
 			purchaseTicketDao.validateInput(visitorBean, ticketBean);
+			visitorBean.setBirthdate(DateConverter.UserInputDateToSQLDate(req.getParameter("inputBirthdate")));
 			
 			purchaseTicketDao.getFestivalEventInformation(festivalEventBean);
 			purchaseTicketDao.getTicketPriceInformation(ticketPriceBean, ticketTypeBean);
-						
+									
 			req.setAttribute("action", "confirm");
 						
 		} catch (ClassNotFoundException | SQLException | IllegalArgumentException e) {
 			e.printStackTrace();
 			req.setAttribute("error", e.getMessage());
 			req.setAttribute("action", "purchase");
+		} catch (DateFormatException e) {	
+			req.setAttribute("error", "Please enter your birthdate in a valid format!");
+			req.setAttribute("action", "purchase");		
 		} finally {
 			try {
 				purchaseTicketDao.closeConnection();
