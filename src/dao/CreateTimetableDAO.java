@@ -13,6 +13,10 @@ import beans.TimetableEntryBean;
 
 public class CreateTimetableDAO extends DAO {
 
+	/*
+	 * Updates the preferences of the bands which the visitor can hear during his festival days
+	 * with the selected preferences of the radio buttons
+	 */
 	public void getPreferences(VisitorAccountBean visitor_account,
 			ArrayList<TimetableEntryBean> timetable_entry,
 			ArrayList<BandBean> bands) throws RuntimeException, SQLException {
@@ -38,6 +42,10 @@ public class CreateTimetableDAO extends DAO {
 
 	}
 
+	/*
+	 * Lists the entries for the personal timetable with bandname, date, start and end time.
+	 * The entries are ordered by the date, start time and lastly by the preferences the user has selected.
+	 */
 	public void getCreateTimetable(VisitorAccountBean visitor_account,
 			ArrayList<BandBean> times) throws RuntimeException, SQLException {
 
