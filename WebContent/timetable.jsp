@@ -38,7 +38,7 @@
 						<input type="hidden" name="username" value="<%= request.getAttribute("username") %>" >
 	
 							
-						<h3>Please rate your bands (1 worst - 5 best):</h3>
+						<h3>Please rate your bands (1 best - 5 worst):</h3>
 						<input type="hidden" name="bands" value="<%= bands.size()%>" >
 							
 						<% for(int i = 0; i < bands.size() ; i++) { %>					
